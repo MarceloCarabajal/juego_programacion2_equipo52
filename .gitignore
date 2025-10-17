@@ -18,6 +18,11 @@ bld/
 [Oo]bj/
 [Ll]og/
 
+# Specific build directories
+juego/x64/
+juego/Debug/
+juego/Release/
+
 # Visual Studio 2015/2017 cache/options directory
 .vs/
 
