@@ -1,5 +1,6 @@
 #include <SFML/Graphics.hpp>
-//#include "Pelotita.h"
+//#include "juego/Pelotita.h"
+#include "juego/Jugador.h"
 
 int main()
 {   
@@ -8,6 +9,7 @@ int main()
 	window.setFramerateLimit(60);
 
 	//Pelotita player;
+	Jugador jugador;
 
     /// game loop
     while (window.isOpen())
@@ -20,14 +22,16 @@ int main()
                 window.close();
         }
 
-		//player.cmd();
+        //player.cmd();
 
         /// update - logica
-       // player.update();
+        //player.update();
+        jugador.update();
 
 		/// draw - render
         window.clear();
         //window.draw(player);
+        window.draw(jugador);
         window.display();
     }
 
