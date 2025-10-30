@@ -1,6 +1,7 @@
 #pragma once
 #include <SFML/Graphics.hpp>
-#include "../Entidad.h"
+
+#include "Entidad.h"
 
 class Enemigo : public Entidad {
 public:
