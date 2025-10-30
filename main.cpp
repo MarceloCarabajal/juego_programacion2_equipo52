@@ -1,5 +1,5 @@
 #include <SFML/Graphics.hpp>
-#include "Pelotita.h"
+//#include "Pelotita.h"
 
 int main()
 {   
@@ -7,7 +7,7 @@ int main()
     sf::RenderWindow window(sf::VideoMode(800, 600), "SFML works!");
 	window.setFramerateLimit(60);
 
-	Pelotita player;
+	//Pelotita player;
 
     /// game loop
     while (window.isOpen())
@@ -20,14 +20,14 @@ int main()
                 window.close();
         }
 
-		player.cmd();
+		//player.cmd();
 
         /// update - logica
-        player.update();
+       // player.update();
 
 		/// draw - render
         window.clear();
-        window.draw(player);
+        //window.draw(player);
         window.display();
     }
 

@@ -1,5 +1,6 @@
 #pragma once
 #include <SFML/Graphics.hpp>
+
 #include "Entidad.h"
 
 class Enemigo : public Entidad {
