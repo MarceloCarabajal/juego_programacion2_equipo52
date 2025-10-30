@@ -1,9 +1,9 @@
 #include "Enemigo.h"
 
-Enemigo::Enemigo(float posX, float posY, float ancho, float alto)
+Enemigo::Enemigo(float posX, float posY, float ancho, float alto) // Inicializa la clase base Entidad con posiciones y dimensiones
     : Entidad(posX, posY, ancho, alto), 
-      vivo(true), 
-      direccion(1), 
+      vivo(true), // configura estado inicial
+      direccion(1), //derecha
       velocidadPatrullaje(50.0f),
       limiteIzquierdo(posX - 100.0f),
       limiteDerecho(posX + 100.0f) {
@@ -26,7 +26,7 @@ void Enemigo::update() {
         return;  // Si está muerto, no hace nada
     }
     
-    patrullar();
+    patrullar(); // si esta vivo ejecuta patrullar
 }
 
 void Enemigo::draw(sf::RenderTarget& target, sf::RenderStates states) const {
