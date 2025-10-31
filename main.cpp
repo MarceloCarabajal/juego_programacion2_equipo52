@@ -25,10 +25,12 @@ int main()
         }
 
         //player.cmd();
+        jugador.cmd();
 
         /// update - logica
         //player.update();
         jugador.update();
+        jugador.checkCollision(piso.getBounds());
         piso.update();
 
 		/// draw - render
