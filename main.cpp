@@ -1,6 +1,7 @@
 #include <SFML/Graphics.hpp>
 //#include "juego/Pelotita.h"
 #include "juego/Jugador.h"
+#include "juego/Plataforma.h"
 
 int main()
 {   
@@ -10,6 +11,7 @@ int main()
 
 	//Pelotita player;
 	Jugador jugador;
+	Plataforma piso(0.f, 550.f, 800.f, 50.f);
 
     /// game loop
     while (window.isOpen())
@@ -27,10 +29,12 @@ int main()
         /// update - logica
         //player.update();
         jugador.update();
+        piso.update();
 
 		/// draw - render
         window.clear();
         //window.draw(player);
+        window.draw(piso);
         window.draw(jugador);
         window.display();
     }
