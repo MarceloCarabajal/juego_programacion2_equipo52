@@ -23,7 +23,13 @@ int main()
         }
 
         // Actualización lógica
+        //player.cmd();
+        jugador.cmd();
+
+        /// update - logica
+        //player.update();
         jugador.update();
+        jugador.checkCollision(piso.getBounds());
         piso.update();
         enemigo.update();
 
