@@ -129,6 +129,8 @@
     <ClCompile Include="Pelotita.cpp" />
     <ClCompile Include="Jugador.cpp" />
     <ClCompile Include="Plataforma.cpp" />
+    <ClCompile Include="Enemigo.cpp" />
+    <ClCompile Include="Entidad.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -137,6 +139,8 @@
     <ClInclude Include="Pelotita.h" />
     <ClInclude Include="Jugador.h" />
     <ClInclude Include="Plataforma.h" />
+    <ClInclude Include="Enemigo.h" />
+    <ClInclude Include="Entidad.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets" />
