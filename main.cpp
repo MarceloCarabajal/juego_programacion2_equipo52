@@ -2,21 +2,19 @@
 //#include "juego/Pelotita.h"
 #include "juego/Jugador.h"
 #include "juego/Plataforma.h"
+#include "juego/Enemigo.h"
 
 int main()
-{   
+{
+    sf::RenderWindow window(sf::VideoMode(800, 600), "Mini Mario Bros");
+    window.setFramerateLimit(60);
 
-    sf::RenderWindow window(sf::VideoMode(800, 600), "SFML works!");
-	window.setFramerateLimit(60);
+    Jugador jugador;
+    Plataforma piso(0.f, 550.f, 800.f, 50.f);
+    Enemigo enemigo(400.f, 500.f); // <-- agregado
 
-	//Pelotita player;
-	Jugador jugador;
-	Plataforma piso(0.f, 550.f, 800.f, 50.f);
-
-    /// game loop
     while (window.isOpen())
     {
-        /// eventos - input
         sf::Event event;
         while (window.pollEvent(event))
         {
@@ -24,6 +22,7 @@ int main()
                 window.close();
         }
 
+        // Actualización lógica
         //player.cmd();
         jugador.cmd();
 
@@ -32,16 +31,15 @@ int main()
         jugador.update();
         jugador.checkCollision(piso.getBounds());
         piso.update();
+        enemigo.update();
 
-		/// draw - render
+        // Dibujado
         window.clear();
-        //window.draw(player);
         window.draw(piso);
         window.draw(jugador);
+        window.draw(enemigo); // <-- agregado
         window.display();
     }
-
-    /// liberar memoria
 
     return 0;
 }
