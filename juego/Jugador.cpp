@@ -5,6 +5,8 @@ Jugador::Jugador()
 	_body.setSize({ 32.f, 32.f });
 	_body.setFillColor(sf::Color::Red);
 	_body.setPosition(100.f, 100.f);
+	_vidas = 3;
+	_puntaje = 0;
 }
 
 void Jugador::cmd() {

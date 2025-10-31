@@ -9,6 +9,7 @@ public:
 
 	// getters que vamos a usar
 	const sf::FloatRect getBounds() const { return _body.getGlobalBounds(); }
+	const sf::FloatRect getCollider() const { return getBounds(); }
 
 private:
 	sf::RectangleShape _body;
