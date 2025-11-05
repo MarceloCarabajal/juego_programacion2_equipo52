@@ -24,6 +24,11 @@ public:
     bool colisionConJugador(const Entidad& jugador);
     void setLimitePatrullaje(float limiteIzq, float limiteDer);
 
+    // nuevo getter para detectar colisiones (Jugador vs Enemigo)
+    const sf::FloatRect getBounds() const { 
+        return forma.getGlobalBounds(); 
+    }
+
 protected:
     // Sobrescribimos el método draw de sf::Drawable
     virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const override;

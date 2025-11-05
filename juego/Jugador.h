@@ -9,8 +9,13 @@ public:
 	void update();
 	void cmd();
 	void checkCollision(const sf::FloatRect& platformBounds);
+	void checkCollisionEnemigo(const sf::FloatRect& enemigoBounds);	
 	const sf::FloatRect getBounds() const { return _body.getGlobalBounds(); }
+
+	const sf::Vector2f& getVelocidad() const { return _velocidad; }
 	
+	
+	// Nuevo getter
 	// atributos de juego
 	int getVidas() const { return _vidas; }
 	int getPuntaje() const { return _puntaje; }
