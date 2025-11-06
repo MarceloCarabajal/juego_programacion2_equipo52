@@ -1,5 +1,22 @@
 #include "Enemigo.h"
 
+Enemigo::Enemigo()
+    : Entidad(0.f, 0.f, 0.f, 0.f),
+      vivo(false),
+      direccion(1),
+      velocidadPatrullaje(50.0f),
+      limiteIzquierdo(0.f),
+      limiteDerecho(0.f)
+{
+    forma.setSize(sf::Vector2f(0.f, 0.f));
+    forma.setPosition(0.f, 0.f);
+    colorNormal = sf::Color(180, 50, 50);
+    colorMuerto = sf::Color(100, 100, 100);
+    forma.setFillColor(colorNormal);
+    forma.setOutlineThickness(2.0f);
+    forma.setOutlineColor(sf::Color::Black);
+}
+
 Enemigo::Enemigo(float posX, float posY, float ancho, float alto)
     : Entidad(posX, posY, ancho, alto),
       vivo(true),

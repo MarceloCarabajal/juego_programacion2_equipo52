@@ -3,7 +3,7 @@
 Jugador::Jugador() 
 	: Entidad(100.f, 100.f, 32.f, 32.f), _gravedad(0.8f), _velocidadSalto(-12.0f), _enSuelo(false) {
 	_body.setSize({ ancho, alto });
-	_body.setFillColor(sf::Color::Red);
+	_body.setFillColor(sf::Color::Blue);
 	_body.setPosition(posX, posY);
 	_vidas = 3;
 	_puntaje = 0;
@@ -81,28 +81,22 @@ void Jugador::checkCollision(const sf::FloatRect& platformBounds) {
 	}
 }
 
+bool Jugador::estaSobrePlataforma(const sf::FloatRect& platformBounds) const {
+	sf::FloatRect jugadorBounds = getRectanguloColision();
+	
+	float jugadorBottom = jugadorBounds.top + jugadorBounds.height;
+	float plataformaTop = platformBounds.top;
+	
 
-void Jugador::checkCollisionEnemigo(const sf::FloatRect& enemigoBounds) {
-    sf::FloatRect jugadorBounds = _body.getGlobalBounds();
-
-    if (jugadorBounds.intersects(enemigoBounds)) {
-        // Determinamos si la colision fue desde arriba
-        float jugadorBottom = jugadorBounds.top + jugadorBounds.height;
-        float enemigoTop = enemigoBounds.top;
-
-        if (_velocidad.y > 0 && jugadorBottom - enemigoTop < 10.f) {
-            // Colisión desde arriba: rebota
-            _velocidad.y = _velocidadSalto / 1.5f; // rebote leve
-            _puntaje += 100; // suma puntos
-            
-        }
-        else {
-            // Colisión lateral o inferior: pierde una vida
-            _vidas--;
-            _body.setPosition(100.f, 100.f); // reinicia posición
-            _velocidad = {0.f, 0.f};
-        }
-    }
+	float tolerancia = 5.0f;
+	
+	bool sobreVerticalmente = (jugadorBottom >= plataformaTop - tolerancia) && 
+	                           (jugadorBottom <= plataformaTop + tolerancia);
+	
+	bool sobreHorizontalmente = (jugadorBounds.left < platformBounds.left + platformBounds.width) &&
+	                            (jugadorBounds.left + jugadorBounds.width > platformBounds.left);
+	
+	return sobreVerticalmente && sobreHorizontalmente;
 }
 
 

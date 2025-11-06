@@ -1,8 +1,9 @@
 #include "Nivel.h"
 
-Nivel::Nivel() : _cantidadPlataformas(0), _cantidadEnemigos(0) {
+Nivel::Nivel() : _cantidadPlataformas(0), _cantidadEnemigos(0), _meta(700.f, 100.f, 50.f, 100.f) {
 	cargarPlataformas();
 	posicionarEnemigos();
+	colocarMeta();
 }
 
 void Nivel::cargarPlataformas() {
@@ -44,6 +45,9 @@ void Nivel::posicionarEnemigos() {
 	_cantidadEnemigos++;
 }
 
+void Nivel::colocarMeta() {
+}
+
 void Nivel::procesarInput() {
 	_jugador.cmd();
 }
@@ -63,17 +67,26 @@ void Nivel::update() {
 }
 
 void Nivel::verificarColisiones() {
+	bool estaSobreAlgunaPlataforma = false;
+	
 	for (int i = 0; i < _cantidadPlataformas; i++) {
-		_jugador.checkCollision(_plataformas[i].getCollider());
+		Colisiones::jugadorVsPlataforma(_jugador, _plataformas[i]);
+		
+		if (_jugador.estaSobrePlataforma(_plataformas[i].getBounds())) {
+			estaSobreAlgunaPlataforma = true;
+		}
+	}
+	
+	if (!estaSobreAlgunaPlataforma && _jugador.isOnGround()) {
+		_jugador.setEnSuelo(false);
 	}
 	
 	for (int i = 0; i < _cantidadEnemigos; i++) {
-		if (_enemigos[i].colisionConJugador(_jugador)) {
-			// logica de colision (arriba mata enemigo, lateral quita vida)
-			// por ahora solo verificamos, la lógica completa la implementa Gise
-			// TODO: Detectar si es colisión desde arriba o lateral
-		}
+		Colisiones::jugadorVsEnemigo(_jugador, _enemigos[i]);
 	}
+	
+	// Verificar colisión con Meta
+	_meta.verificarLlegada(_jugador);
 }
 
 void Nivel::dibujarTodo(sf::RenderTarget& target) {
@@ -85,8 +98,12 @@ void Nivel::dibujarTodo(sf::RenderTarget& target) {
 		target.draw(_enemigos[i]);
 	}
 	
-	target.draw(_jugador);
+	target.draw(_meta);
 	
-	// Meta: cuando gise lo implemente
+	target.draw(_jugador);
+}
+
+bool Nivel::verificarVictoria() const {
+	return _meta.estaAlcanzada();
 }
 

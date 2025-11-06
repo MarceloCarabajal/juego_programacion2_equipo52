@@ -2,7 +2,7 @@
 #include <SFML/Graphics.hpp>
 #include "Entidad.h"
 
-class Meta : public Entidad {
+class Meta : public Entidad, public sf::Drawable {
 public:
     Meta(float posX, float posY, float ancho, float alto);
     virtual ~Meta() = default;
