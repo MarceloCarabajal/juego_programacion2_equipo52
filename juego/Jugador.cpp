@@ -81,6 +81,31 @@ void Jugador::checkCollision(const sf::FloatRect& platformBounds) {
 	}
 }
 
+
+void Jugador::checkCollisionEnemigo(const sf::FloatRect& enemigoBounds) {
+    sf::FloatRect jugadorBounds = _body.getGlobalBounds();
+
+    if (jugadorBounds.intersects(enemigoBounds)) {
+        // Determinamos si la colision fue desde arriba
+        float jugadorBottom = jugadorBounds.top + jugadorBounds.height;
+        float enemigoTop = enemigoBounds.top;
+
+        if (_velocidad.y > 0 && jugadorBottom - enemigoTop < 10.f) {
+            // Colisión desde arriba: rebota
+            _velocidad.y = _velocidadSalto / 1.5f; // rebote leve
+            _puntaje += 100; // suma puntos
+            
+        }
+        else {
+            // Colisión lateral o inferior: pierde una vida
+            _vidas--;
+            _body.setPosition(100.f, 100.f); // reinicia posición
+            _velocidad = {0.f, 0.f};
+        }
+    }
+}
+
+
 void Jugador::draw(sf::RenderTarget& target, sf::RenderStates states) const {
 	target.draw(_body, states);
 }
