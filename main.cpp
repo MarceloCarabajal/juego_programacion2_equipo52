@@ -1,17 +1,12 @@
 #include <SFML/Graphics.hpp>
-//#include "juego/Pelotita.h"
-#include "juego/Jugador.h"
-#include "juego/Plataforma.h"
-#include "juego/Enemigo.h"
+#include "juego/Nivel.h"
 
 int main()
 {
     sf::RenderWindow window(sf::VideoMode(800, 600), "Mini Mario Bros");
     window.setFramerateLimit(60);
 
-    Jugador jugador;
-    Plataforma piso(0.f, 550.f, 800.f, 50.f);
-    Enemigo enemigo(400.f, 500.f); // <-- agregado
+    Nivel nivel;
 
     while (window.isOpen())
     {
@@ -22,22 +17,13 @@ int main()
                 window.close();
         }
 
-        // Actualización lógica
-        //player.cmd();
-        jugador.cmd();
+        // Procesar input y actualizar
+        nivel.procesarInput();
+        nivel.update();
 
-        /// update - logica
-        //player.update();
-        jugador.update();
-        jugador.checkCollision(piso.getBounds());
-        piso.update();
-        enemigo.update();
-
-        // Dibujado
+        // Dibujar todo
         window.clear();
-        window.draw(piso);
-        window.draw(jugador);
-        window.draw(enemigo); // <-- agregado
+        nivel.dibujarTodo(window);
         window.display();
     }
 
