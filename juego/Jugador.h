@@ -12,11 +12,12 @@ public:
 	
 	void cmd();
 	void checkCollision(const sf::FloatRect& platformBounds);
+	bool estaSobrePlataforma(const sf::FloatRect& platformBounds) const;
 	const sf::FloatRect getBounds() const { return getRectanguloColision(); }
-	void checkCollisionEnemigo(const sf::FloatRect& enemigoBounds);	
-	const sf::FloatRect getBounds() const { return _body.getGlobalBounds(); }
-
-	const sf::Vector2f& getVelocidad() const { return _velocidad; }
+	
+	sf::Vector2f getVelocidad() const { return sf::Vector2f(velX, velY); }
+	
+	void setEnSuelo(bool enSuelo) { _enSuelo = enSuelo; }
 	
 	
 	// Nuevo getter

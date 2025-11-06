@@ -3,6 +3,7 @@
 
 class Plataforma : public sf::Drawable {
 public:
+	Plataforma(); // Constructor por defecto para arrays
 	Plataforma(float x, float y, float w, float h);
 	void update();
 	void draw(sf::RenderTarget& target, sf::RenderStates states) const override;

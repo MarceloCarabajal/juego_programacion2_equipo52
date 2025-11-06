@@ -3,6 +3,8 @@
 #include "Jugador.h"
 #include "Plataforma.h"
 #include "Enemigo.h"
+#include "Meta.h"
+#include "Colisiones.h"
 
 class Nivel {
 public:
@@ -12,20 +14,20 @@ public:
 	Nivel();
 	void cargarPlataformas(); 
 	void posicionarEnemigos();
+	void colocarMeta();
 	void dibujarTodo(sf::RenderTarget& target);
 	
 	void update();
 	void procesarInput();
 	Jugador* getJugador() { return &_jugador; }
 	
-	// placeholder para Meta (gise)
-	// void colocarMeta();
-	// bool verificarVictoria() const;
+	bool verificarVictoria() const;
 
 private:
 	Jugador _jugador;
 	Plataforma _plataformas[MAX_PLATAFORMAS];
 	Enemigo _enemigos[MAX_ENEMIGOS];
+	Meta _meta;
 	int _cantidadPlataformas;
 	int _cantidadEnemigos;
 	

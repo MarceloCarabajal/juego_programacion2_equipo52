@@ -15,6 +15,7 @@ private:
     sf::Color colorMuerto;
 
 public:
+    Enemigo(); // Constructor por defecto para arrays
     //  Constructor con valores por defecto para ancho y alto
     Enemigo(float posX, float posY, float ancho = 50.f, float alto = 50.f);
 
