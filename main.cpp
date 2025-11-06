@@ -1,8 +1,10 @@
 #include <SFML/Graphics.hpp>
 //#include "juego/Pelotita.h"
 #include "juego/Jugador.h"
-#include "juego/Plataforma.h"
 #include "juego/Enemigo.h"
+#include "juego/Plataforma.h"
+#include "juego/Meta.h"
+#include "juego/Colisiones.h"
 
 int main()
 {
@@ -11,7 +13,8 @@ int main()
 
     Jugador jugador;
     Plataforma piso(0.f, 550.f, 800.f, 50.f);
-    Enemigo enemigo(400.f, 500.f); // <-- agregado
+    Enemigo enemigo(400.f, 500.f);
+    Meta meta(700.0f, 450.0f, 40.0f, 100.0f); 
 
     while (window.isOpen())
     {
@@ -22,22 +25,27 @@ int main()
                 window.close();
         }
 
-        // Actualización lógica
+         // === ENTRADAS DEL JUGADOR ===
         //player.cmd();
         jugador.cmd();
-
-        /// update - logica
+        
+        // === LÓGICA ===
         //player.update();
         jugador.update();
-        jugador.checkCollision(piso.getBounds());
         piso.update();
         enemigo.update();
+        meta.update();
 
-        // Dibujado
+        // === SISTEMA DE COLISIONES ===
+        Colisiones::jugadorVsPlataforma(jugador, piso);
+        Colisiones::jugadorVsEnemigo(jugador, enemigo);
+
+        // === DIBUJADO ===
         window.clear();
         window.draw(piso);
         window.draw(jugador);
-        window.draw(enemigo); // <-- agregado
+        window.draw(enemigo);
+        meta.draw(window, sf::RenderStates::Default);
         window.display();
     }
 
