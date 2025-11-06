@@ -1,10 +1,10 @@
 #include "Jugador.h"
 
 Jugador::Jugador() 
-	: _velocidad(0.f, 0.f), _gravedad(0.8f), _velocidadSalto(-12.0f), _enSuelo(false) {
-	_body.setSize({ 32.f, 32.f });
+	: Entidad(100.f, 100.f, 32.f, 32.f), _gravedad(0.8f), _velocidadSalto(-12.0f), _enSuelo(false) {
+	_body.setSize({ ancho, alto });
 	_body.setFillColor(sf::Color::Red);
-	_body.setPosition(100.f, 100.f);
+	_body.setPosition(posX, posY);
 	_vidas = 3;
 	_puntaje = 0;
 }
@@ -12,63 +12,71 @@ Jugador::Jugador()
 void Jugador::cmd() {
 	// movimiento horizontal
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::A) || sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
-		_velocidad.x = -5.0f;
+		velX = -5.0f;
 	}
 	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::D) || sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
-		_velocidad.x = 5.0f;
+		velX = 5.0f;
 	}
 	else {
-		_velocidad.x = 0.0f;
+		velX = 0.0f;
 	}
 	
 	// salto
 	if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Space) || 
 		 sf::Keyboard::isKeyPressed(sf::Keyboard::W) || 
 		 sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) && _enSuelo) {
-		_velocidad.y = _velocidadSalto;
+		velY = _velocidadSalto;
 		_enSuelo = false;
 	}
 }
 
 void Jugador::update() {
+	// Aplicar gravedad
 	if (!_enSuelo) {
-		_velocidad.y += _gravedad;
+		velY += _gravedad;
 	}
 	
-	if (_velocidad.y > 15.0f) {
-		_velocidad.y = 15.0f;
+	// Limitar velocidad de caída
+	if (velY > 15.0f) {
+		velY = 15.0f;
 	}
 	
-	_body.move(_velocidad);
+	// Actualizar posición usando velocidad de Entidad
+	posX += velX;
+	posY += velY;
 	
-	sf::Vector2f pos = _body.getPosition();
-	if (pos.x < 0) {
-		_body.setPosition(0, pos.y);
-		_velocidad.x = 0;
+	// Limitar a los bordes de la pantalla
+	if (posX < 0) {
+		posX = 0;
+		velX = 0;
 	}
-	if (pos.x + 32 > 800) {
-		_body.setPosition(800 - 32, pos.y);
-		_velocidad.x = 0;
+	if (posX + ancho > 800) {
+		posX = 800 - ancho;
+		velX = 0;
 	}
-	if (pos.y < 0) {
-		_body.setPosition(pos.x, 0);
-		_velocidad.y = 0;
+	if (posY < 0) {
+		posY = 0;
+		velY = 0;
 	}
-	if (pos.y + 32 > 600) {
-		_body.setPosition(pos.x, 600 - 32);
-		_velocidad.y = 0;
+	if (posY + alto > 600) {
+		posY = 600 - alto;
+		velY = 0;
 		_enSuelo = true;
 	}
+	
+	// Sincronizar sprite con posición de Entidad
+	_body.setPosition(posX, posY);
 }
 
 void Jugador::checkCollision(const sf::FloatRect& platformBounds) {
-	sf::FloatRect jugadorBounds = _body.getGlobalBounds();
+	sf::FloatRect jugadorBounds = getRectanguloColision();
 	
 	if (jugadorBounds.intersects(platformBounds)) {
-		if (_velocidad.y > 0 && jugadorBounds.top < platformBounds.top) {
-			_body.setPosition(_body.getPosition().x, platformBounds.top - 32);
-			_velocidad.y = 0;
+		if (velY > 0 && jugadorBounds.top < platformBounds.top) {
+			posY = platformBounds.top - alto;
+			velY = 0;
 			_enSuelo = true;
+			_body.setPosition(posX, posY);
 		}
 	}
 }

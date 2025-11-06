@@ -1,20 +1,12 @@
 #include <SFML/Graphics.hpp>
-//#include "juego/Pelotita.h"
-#include "juego/Jugador.h"
-#include "juego/Enemigo.h"
-#include "juego/Plataforma.h"
-#include "juego/Meta.h"
-#include "juego/Colisiones.h"
+#include "juego/Nivel.h"
 
 int main()
 {
     sf::RenderWindow window(sf::VideoMode(800, 600), "Mini Mario Bros");
     window.setFramerateLimit(60);
 
-    Jugador jugador;
-    Plataforma piso(0.f, 550.f, 800.f, 50.f);
-    Enemigo enemigo(400.f, 500.f);
-    Meta meta(700.0f, 450.0f, 40.0f, 100.0f); 
+    Nivel nivel;
 
     while (window.isOpen())
     {
@@ -25,27 +17,13 @@ int main()
                 window.close();
         }
 
-         // === ENTRADAS DEL JUGADOR ===
-        //player.cmd();
-        jugador.cmd();
-        
-        // === LÓGICA ===
-        //player.update();
-        jugador.update();
-        piso.update();
-        enemigo.update();
-        meta.update();
+        // Procesar input y actualizar
+        nivel.procesarInput();
+        nivel.update();
 
-        // === SISTEMA DE COLISIONES ===
-        Colisiones::jugadorVsPlataforma(jugador, piso);
-        Colisiones::jugadorVsEnemigo(jugador, enemigo);
-
-        // === DIBUJADO ===
+        // Dibujar todo
         window.clear();
-        window.draw(piso);
-        window.draw(jugador);
-        window.draw(enemigo);
-        meta.draw(window, sf::RenderStates::Default);
+        nivel.dibujarTodo(window);
         window.display();
     }
 
