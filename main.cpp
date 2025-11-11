@@ -1,5 +1,7 @@
 #include <SFML/Graphics.hpp>
 #include "juego/Nivel.h"
+#include "juego/Puntaje.h"
+
 
 int main()
 {
@@ -7,6 +9,8 @@ int main()
     window.setFramerateLimit(60);
 
     Nivel nivel;
+    Puntaje puntaje;
+
 
     while (window.isOpen())
     {
@@ -20,10 +24,15 @@ int main()
         // Procesar input y actualizar
         nivel.procesarInput();
         nivel.update();
+        
+        // Getter devuelve puntero que accede a Jugador
+        puntaje.update(*nivel.getJugador());
+
 
         // Dibujar todo
         window.clear();
         nivel.dibujarTodo(window);
+        window.draw(puntaje);
         window.display();
     }
 
