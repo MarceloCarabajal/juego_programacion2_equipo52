@@ -109,6 +109,10 @@
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
+    <PostBuildEvent>
+      <Command>if not exist "$(OutDir)recursos" mkdir "$(OutDir)recursos"
+xcopy /Y /I "$(ProjectDir)..\recursos\*" "$(OutDir)recursos\"</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -123,6 +127,10 @@
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
+    <PostBuildEvent>
+      <Command>if not exist "$(OutDir)recursos" mkdir "$(OutDir)recursos"
+xcopy /Y /I "$(ProjectDir)..\recursos\*" "$(OutDir)recursos\"</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\main.cpp" />
@@ -133,6 +141,8 @@
     <ClCompile Include="Nivel.cpp" />
     <ClCompile Include="Colisiones.cpp" />
     <ClCompile Include="Meta.cpp" />
+    <ClCompile Include="GestorArchivos.cpp" />
+    <ClCompile Include="Puntaje.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -145,6 +155,8 @@
     <ClInclude Include="Nivel.h" />
     <ClInclude Include="Colisiones.h" />
     <ClInclude Include="Meta.h" />
+    <ClInclude Include="GestorArchivos.h" />
+    <ClInclude Include="Puntaje.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets" />
