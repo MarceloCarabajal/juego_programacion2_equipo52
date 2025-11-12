@@ -2,8 +2,23 @@
 #include <iostream>
 
 Puntaje::Puntaje() : _tiempoTranscurrido(0.f) {
-    if (!_fuente.loadFromFile("recursos/PressStart2P-Regular.ttf")) {
-        std::cerr << "Error al cargar la fuente PressStart2P-Regular.ttf\n";
+    // Intentar cargar la fuente desde diferentes rutas
+    const char* rutas[] = {
+        "recursos/PressStart2P-Regular.ttf",
+        "../recursos/PressStart2P-Regular.ttf",
+        "../../recursos/PressStart2P-Regular.ttf"
+    };
+    
+    bool fuenteCargada = false;
+    for (int i = 0; i < 3; i++) {
+        if (_fuente.loadFromFile(rutas[i])) {
+            fuenteCargada = true;
+            break;
+        }
+    }
+    
+    if (!fuenteCargada) {
+        std::cerr << "Error: No se pudo cargar la fuente." << std::endl;
     }
 
     _textoPuntaje.setFont(_fuente);
