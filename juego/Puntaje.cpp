@@ -24,12 +24,17 @@ Puntaje::Puntaje() : _tiempoTranscurrido(0.f) {
 }
 
 void Puntaje::update(const Jugador& jugador) {
-    _tiempoTranscurrido = _reloj.getElapsedTime().asSeconds();
+    const float TIEMPO_INICIAL = 60.0f; // Duración total en segundos
+    float tiempoRestante = TIEMPO_INICIAL - _reloj.getElapsedTime().asSeconds();
+    if (tiempoRestante < 0) tiempoRestante = 0;
+
+    _tiempoTranscurrido = tiempoRestante;
 
     _textoPuntaje.setString("Puntaje: " + std::to_string(jugador.getPuntaje()));
     _textoVidas.setString("Vidas: " + std::to_string(jugador.getVidas()));
     _textoTiempo.setString("Tiempo: " + std::to_string(static_cast<int>(_tiempoTranscurrido)));
 }
+
 
 void Puntaje::draw(sf::RenderTarget& target, sf::RenderStates states) const {
     target.draw(_textoPuntaje, states);
