@@ -6,6 +6,8 @@
 #include "juego/GameOver.h"
 #include "juego/Victoria.h"
 
+int main()
+{
     sf::RenderWindow window(sf::VideoMode(800, 600), "Mini Mario Bros");
     window.setFramerateLimit(60);
 
@@ -18,6 +20,8 @@
 
     while (window.isOpen()) {
         sf::Event event;
+        bool cambiarEstado = false;
+        
         while (window.pollEvent(event)) {
             if (event.type == sf::Event::Closed)
                 window.close();
@@ -26,11 +30,44 @@
             if (estado == EstadoJuego::MENU) {
                 menu.procesarEvento(event, window);
             }
+            // ======= GAME OVER =======
+            else if (estado == EstadoJuego::GAME_OVER) {
+                gameOver.procesarEvento(event, window);
+                // Verificar inmediatamente después de procesar el evento
+                if (gameOver.volverAlMenu()) {
+                    gameOver.reset();
+                    menu.reset(); // Resetear el flag del menu para evitar iniciar juego inmediatamente
+                    estado = EstadoJuego::MENU;
+                    cambiarEstado = true;
+                    break; // Salir del loop de eventos para evitar procesar el mismo evento en Menu
+                }
+            }
+            // ======= VICTORIA =======
+            else if (estado == EstadoJuego::VICTORIA) {
+                victoria.procesarEvento(event, window);
+                // Verificar inmediatamente después de procesar el evento
+                if (victoria.volverAlMenu()) {
+                    victoria.reset();
+                    menu.reset(); // Resetear el flag del menu para evitar iniciar juego inmediatamente
+                    estado = EstadoJuego::MENU;
+                    cambiarEstado = true;
+                    break; // Salir del loop de eventos para evitar procesar el mismo evento en Menu
+                }
+            }
+        }
+        
+        // Si se cambió el estado, saltar el dibujado y continuar
+        if (cambiarEstado) {
+            continue;
         }
 
         // ======= MENU =======
         if (estado == EstadoJuego::MENU) {
             if (menu.estaIniciandoJuego()) {
+                menu.reset();
+                // Reiniciar el nivel para empezar un juego nuevo
+                nivel = Nivel();
+                puntaje.reset();
                 estado = EstadoJuego::JUGANDO;
             }
 
@@ -62,31 +99,13 @@
 
         // ======= GAME OVER =======
         else if (estado == EstadoJuego::GAME_OVER) {
-            gameOver.update();
-
             window.clear();
             gameOver.draw(window);
             window.display();
-
-            // Si el jugador presiona ENTER, retorna al menú
-            if (gameOver.volverAlMenu()) {
-                estado = EstadoJuego::MENU;
-            }
         }
 
         // ======= VICTORIA =======
         else if (estado == EstadoJuego::VICTORIA) {
-            while (window.pollEvent(event)) {
-                if (event.type == sf::Event::Closed)
-                    window.close();
-
-                victoria.procesarEvento(event, window);
-            }
-
-            if (victoria.volverAlMenu()) {
-                estado = EstadoJuego::MENU;
-            }
-
             window.clear();
             window.draw(victoria);
             window.display();

@@ -5,9 +5,10 @@ class GameOver {
 public:
     GameOver();
 
-    void update();
+    void procesarEvento(const sf::Event& event, sf::RenderWindow& window);
     void draw(sf::RenderWindow& window);
     bool volverAlMenu() const;
+    void reset();
 
 private:
     sf::Font fuente;

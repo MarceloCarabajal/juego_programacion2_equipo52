@@ -2,7 +2,22 @@
 #include <iostream>
 
 Victoria::Victoria() : _volverAlMenu(false) {
-    if (!_fuente.loadFromFile("recursos/PressStart2P-Regular.ttf")) {
+    // Intentar cargar la fuente desde diferentes rutas
+    const char* rutas[] = {
+        "recursos/PressStart2P-Regular.ttf",
+        "../recursos/PressStart2P-Regular.ttf",
+        "../../recursos/PressStart2P-Regular.ttf"
+    };
+    
+    bool fuenteCargada = false;
+    for (int i = 0; i < 3; i++) {
+        if (_fuente.loadFromFile(rutas[i])) {
+            fuenteCargada = true;
+            break;
+        }
+    }
+    
+    if (!fuenteCargada) {
         std::cerr << "Error al cargar la fuente en Victoria" << std::endl;
     }
 
@@ -44,4 +59,8 @@ void Victoria::procesarEvento(const sf::Event& event, sf::RenderWindow& window) 
 void Victoria::draw(sf::RenderTarget& target, sf::RenderStates states) const {
     target.draw(_textoTitulo, states);
     target.draw(_textoSubtitulo, states);
+}
+
+void Victoria::reset() {
+    _volverAlMenu = false;
 }

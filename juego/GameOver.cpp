@@ -2,10 +2,22 @@
 #include <iostream>
 
 GameOver::GameOver() {
-    // Intentamos cargar la fuente 
-    if (!fuente.loadFromFile("recursos/PressStart2P-Regular.ttf")) {
-        std::cerr << "Warning: no se pudo cargar la fuente GameOver (recursos/PressStart2P-Regular.ttf)\n";
-        // No devolvemos error: seguimos con fuente por defecto 
+    const char* rutas[] = {
+        "recursos/PressStart2P-Regular.ttf",
+        "../recursos/PressStart2P-Regular.ttf",
+        "../../recursos/PressStart2P-Regular.ttf"
+    };
+    
+    bool fuenteCargada = false;
+    for (int i = 0; i < 3; i++) {
+        if (fuente.loadFromFile(rutas[i])) {
+            fuenteCargada = true;
+            break;
+        }
+    }
+    
+    if (!fuenteCargada) {
+        std::cerr << "Warning: no se pudo cargar la fuente GameOver\n";
     }
 
     textoGameOver.setFont(fuente);
@@ -20,12 +32,10 @@ GameOver::GameOver() {
     textoInstruccion.setCharacterSize(20);
     textoInstruccion.setFillColor(sf::Color::White);
 
-    // Centrar los textos en sus posiciones iniciales
     centrarTextos();
 }
 
 void GameOver::centrarTextos() {
-    // Asumimos ventana 800x600 
     const float anchoVentana = 800.f;
     const float altoVentana = 600.f;
 
@@ -40,19 +50,21 @@ void GameOver::centrarTextos() {
     textoInstruccion.setPosition(anchoVentana / 2.f, altoVentana / 2.f + 60.f);
 }
 
-void GameOver::update() {
-    // Setear volver cuando se presione Enter
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Enter)) {
+void GameOver::procesarEvento(const sf::Event& event, sf::RenderWindow& window) {
+    if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Enter) {
         volver = true;
     }
 }
 
 void GameOver::draw(sf::RenderWindow& window) {
-  
     window.draw(textoGameOver);
     window.draw(textoInstruccion);
 }
 
 bool GameOver::volverAlMenu() const {
     return volver;
+}
+
+void GameOver::reset() {
+    volver = false;
 }

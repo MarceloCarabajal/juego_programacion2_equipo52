@@ -50,6 +50,10 @@ void Puntaje::update(const Jugador& jugador) {
     _textoTiempo.setString("Tiempo: " + std::to_string(static_cast<int>(_tiempoTranscurrido)));
 }
 
+void Puntaje::reset() {
+    _reloj.restart();
+    _tiempoTranscurrido = 0.f;
+}
 
 void Puntaje::draw(sf::RenderTarget& target, sf::RenderStates states) const {
     target.draw(_textoPuntaje, states);

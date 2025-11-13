@@ -17,5 +17,6 @@ public:
     Puntaje();
 
     void update(const Jugador& jugador);
+    void reset();
     void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 };

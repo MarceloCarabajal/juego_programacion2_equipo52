@@ -7,6 +7,7 @@ public:
 
     void procesarEvento(const sf::Event& event, sf::RenderWindow& window);
     bool volverAlMenu() const { return _volverAlMenu; }
+    void reset();
 
 private:
     void draw(sf::RenderTarget& target, sf::RenderStates states) const override;

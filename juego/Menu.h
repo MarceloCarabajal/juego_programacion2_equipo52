@@ -17,6 +17,7 @@ public:
     void procesarEvento(const sf::Event& event, sf::RenderWindow& window);
     void update();
     bool estaIniciandoJuego() const { return _iniciandoJuego; }
+    void reset() { _iniciandoJuego = false; }
 
     void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 };
