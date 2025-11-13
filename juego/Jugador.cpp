@@ -7,6 +7,7 @@ Jugador::Jugador()
 	_body.setPosition(posX, posY);
 	_vidas = 3;
 	_puntaje = 0;
+	_invulnerable = false;
 }
 
 void Jugador::cmd() {
@@ -63,6 +64,13 @@ void Jugador::update() {
 		velY = 0;
 		_enSuelo = true;
 	}
+
+	// Control de invulnerabilidad
+	if (_invulnerable && _relojInvulnerabilidad.getElapsedTime().asSeconds() > 1.5f) {
+    _invulnerable = false;
+	_relojInvulnerabilidad.restart();
+    _body.setFillColor(sf::Color::Blue); // vuelve al color normal
+}
 	
 	// Sincronizar sprite con posición de Entidad
 	_body.setPosition(posX, posY);
@@ -79,6 +87,16 @@ void Jugador::checkCollision(const sf::FloatRect& platformBounds) {
 			_body.setPosition(posX, posY);
 		}
 	}
+}
+
+
+void Jugador::perderVida() {
+    if (!_invulnerable && _vidas > 0) {
+        _vidas--;
+        _invulnerable = true;
+        _relojInvulnerabilidad.restart();
+        _body.setFillColor(sf::Color::Red);  // muestra daño
+    }
 }
 
 bool Jugador::estaSobrePlataforma(const sf::FloatRect& platformBounds) const {
