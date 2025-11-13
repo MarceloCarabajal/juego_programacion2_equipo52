@@ -6,10 +6,12 @@ class Enemigo : public Entidad, public sf::Drawable {
 private:
     sf::RectangleShape forma;
     bool vivo;
+    bool _derrotado = false;
     int direccion; // 1 derecha, -1 izquierda
     float velocidadPatrullaje;
     float limiteIzquierdo;
     float limiteDerecho;
+    float tiempoParaDesaparecer = 0.f;
 
     sf::Color colorNormal;
     sf::Color colorMuerto;
@@ -24,11 +26,22 @@ public:
     void morir();
     bool colisionConJugador(const Entidad& jugador);
     void setLimitePatrullaje(float limiteIzq, float limiteDer);
+    void derrotar() { _derrotado = true; }
+    bool estaDerrotado() const { return _derrotado; }
+   
+    void desaparecer() {
+    vivo = false;
+    posX = -1000.f;
+    posY = -1000.f;
+    forma.setPosition(posX, posY);
+}
 
-    // nuevo getter para detectar colisiones (Jugador vs Enemigo)
-    const sf::FloatRect getBounds() const { 
+
+
+// nuevo getter para detectar colisiones Jugador vs Enemigo
+const sf::FloatRect getBounds() const { 
         return forma.getGlobalBounds(); 
-    }
+}
 
 protected:
     // Sobrescribimos el método draw de sf::Drawable

@@ -22,6 +22,8 @@ public:
 	Jugador* getJugador() { return &_jugador; }
 	
 	bool verificarVictoria() const;
+	bool nivelCompletado() const { return _nivelCompletado; }
+    bool gameOver() const { return _gameOver; }
 
 private:
 	Jugador _jugador;
@@ -30,6 +32,8 @@ private:
 	Meta _meta;
 	int _cantidadPlataformas;
 	int _cantidadEnemigos;
+	bool _nivelCompletado = false;
+    bool _gameOver = false;
 	
 	void verificarColisiones();
 };
