@@ -143,6 +143,7 @@ xcopy /Y /I "$(ProjectDir)..\recursos\*" "$(OutDir)recursos\"</Command>
     <ClCompile Include="Meta.cpp" />
     <ClCompile Include="GestorArchivos.cpp" />
     <ClCompile Include="Puntaje.cpp" />
+	<ClCompile Include="Menu.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -157,6 +158,8 @@ xcopy /Y /I "$(ProjectDir)..\recursos\*" "$(OutDir)recursos\"</Command>
     <ClInclude Include="Meta.h" />
     <ClInclude Include="GestorArchivos.h" />
     <ClInclude Include="Puntaje.h" />
+	<ClInclude Include="Menu.h" />
+	<ClInclude Include="EstadosJuego.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets" />

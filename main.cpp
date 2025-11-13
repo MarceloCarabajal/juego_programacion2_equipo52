@@ -3,8 +3,6 @@
 #include "juego/Puntaje.h"
 #include "juego/Menu.h"
 #include "juego/EstadosJuego.h"
-
-int main() {
 #include "juego/GestorArchivos.h"
 #include <iostream>
 
