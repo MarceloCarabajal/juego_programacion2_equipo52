@@ -32,7 +32,6 @@ Meta::Meta(float posX, float posY, float ancho, float alto)
 
 void Meta::update() {
     // La meta no necesita actualizarse cada frame
-    // Podría agregarse una animación aquí en el futuro
 }
 
 void Meta::draw(sf::RenderTarget& target, sf::RenderStates states) const {

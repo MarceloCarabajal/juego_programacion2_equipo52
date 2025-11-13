@@ -39,10 +39,17 @@ Enemigo::Enemigo(float posX, float posY, float ancho, float alto)
 }
 
 void Enemigo::update() {
-    if (!vivo)
-        return; // Si está muerto, no hace nada
+     if (!vivo) {
+        // Si está muerto, desaparece progresivamente
+        if (tiempoParaDesaparecer > 0.f) {
+            tiempoParaDesaparecer -= 1.0f / 60.0f; 
+            if (tiempoParaDesaparecer <= 0.f)
+                desaparecer();
+        }
+        return;
+    }
 
-    patrullar(); // si esta vivo ejecuta patrullar
+    patrullar();// si esta vivo ejecuta patrullar
 }
 
 void Enemigo::draw(sf::RenderTarget& target, sf::RenderStates states) const {
@@ -74,12 +81,20 @@ void Enemigo::morir() {
     if (vivo) {
         vivo = false;
         forma.setFillColor(colorMuerto);
-        // Opcional: hacer el enemigo más chico cuando muere
+
+        // Efecto visual: más chico cuando muere
         forma.setSize(sf::Vector2f(ancho, alto * 0.5f));
-        posY += alto * 0.5f; // Ajustar posición para que "aplaste"
+        posY += alto * 0.5f;
         forma.setPosition(posX, posY);
+
+        // Espera un tiempo antes de desaparecer
+        tiempoParaDesaparecer = 1.0f;
+
+        // Desaparece
+        desaparecer();
     }
 }
+
 
 bool Enemigo::colisionConJugador(const Entidad& jugador) {
     if (!vivo)

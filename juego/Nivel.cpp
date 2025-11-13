@@ -86,8 +86,16 @@ void Nivel::verificarColisiones() {
 	}
 	
 	// Verificar colisión con Meta
-	_meta.verificarLlegada(_jugador);
+	if (_meta.verificarLlegada(_jugador)) {
+        _nivelCompletado = true;
+	}
+	
+	// Verificar si el jugador perdió todas las vidas
+    if (_jugador.getVidas() <= 0) {
+       _gameOver = true;
+	}
 }
+
 
 void Nivel::dibujarTodo(sf::RenderTarget& target) {
 	for (int i = 0; i < _cantidadPlataformas; i++) {

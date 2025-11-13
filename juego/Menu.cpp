@@ -34,7 +34,7 @@ Menu::Menu() : _iniciandoJuego(false) {
 
     _opcionSalir.setFont(_fuente);
     _opcionSalir.setString("Presiona ESC para salir");
-    _opcionSalir.setCharacterSize(14);
+    _opcionSalir.setCharacterSize(16);
     _opcionSalir.setFillColor(sf::Color(200, 200, 200));
     _opcionSalir.setPosition(210, 350);
 }
