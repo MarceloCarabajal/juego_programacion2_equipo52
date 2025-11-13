@@ -6,7 +6,6 @@
 #include "juego/GameOver.h"
 #include "juego/Victoria.h"
 
-int main() {
     sf::RenderWindow window(sf::VideoMode(800, 600), "Mini Mario Bros");
     window.setFramerateLimit(60);
 

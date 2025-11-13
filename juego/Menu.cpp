@@ -2,7 +2,21 @@
 #include <iostream>
 
 Menu::Menu() : _iniciandoJuego(false) {
-    if (!_fuente.loadFromFile("recursos/PressStart2P-Regular.ttf")) {
+    const char* rutas[] = {
+        "recursos/PressStart2P-Regular.ttf",
+        "../recursos/PressStart2P-Regular.ttf",
+        "../../recursos/PressStart2P-Regular.ttf"
+    };
+    
+    bool fuenteCargada = false;
+    for (int i = 0; i < 3; i++) {
+        if (_fuente.loadFromFile(rutas[i])) {
+            fuenteCargada = true;
+            break;
+        }
+    }
+    
+    if (!fuenteCargada) {
         std::cerr << "No se pudo cargar la fuente del menu.\n";
     }
 
