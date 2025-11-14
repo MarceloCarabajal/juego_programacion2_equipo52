@@ -139,6 +139,7 @@ xcopy /Y /I "$(ProjectDir)..\recursos\*" "$(OutDir)recursos\"</Command>
     <ClCompile Include="Enemigo.cpp" />
     <ClCompile Include="Entidad.cpp" />
     <ClCompile Include="Nivel.cpp" />
+    <ClCompile Include="Nivel2.cpp" />
     <ClCompile Include="Colisiones.cpp" />
     <ClCompile Include="Meta.cpp" />
     <ClCompile Include="GestorArchivos.cpp" />
@@ -156,6 +157,7 @@ xcopy /Y /I "$(ProjectDir)..\recursos\*" "$(OutDir)recursos\"</Command>
     <ClInclude Include="Enemigo.h" />
     <ClInclude Include="Entidad.h" />
     <ClInclude Include="Nivel.h" />
+    <ClInclude Include="Nivel2.h" />
     <ClInclude Include="Colisiones.h" />
     <ClInclude Include="Meta.h" />
     <ClInclude Include="GestorArchivos.h" />
