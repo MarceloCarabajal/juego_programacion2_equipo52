@@ -6,6 +6,11 @@ void Colisiones::jugadorVsPlataforma(Jugador& jugador, const Plataforma& platafo
 }
 
 void Colisiones::jugadorVsEnemigo(Jugador& jugador, Enemigo& enemigo) {
+    // Verificar que el enemigo esté vivo antes de procesar colisiones
+    if (!enemigo.estaVivo()) {
+        return;
+    }
+    
     sf::FloatRect jugadorBounds = jugador.getBounds();
     sf::FloatRect enemigoBounds = enemigo.getBounds();
 

@@ -28,6 +28,7 @@ public:
     void setLimitePatrullaje(float limiteIzq, float limiteDer);
     void derrotar() { _derrotado = true; }
     bool estaDerrotado() const { return _derrotado; }
+    bool estaVivo() const { return vivo; }
    
     void desaparecer() {
     vivo = false;

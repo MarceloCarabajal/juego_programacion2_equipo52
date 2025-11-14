@@ -37,6 +37,11 @@ Victoria::Victoria() : _volverAlMenu(false) {
                            boundsTitulo.top + boundsTitulo.height / 2.0f);
     _textoTitulo.setPosition(anchoVentana / 2.0f, 200.f);
 
+    // Texto de puntaje
+    _textoPuntaje.setFont(_fuente);
+    _textoPuntaje.setCharacterSize(20);
+    _textoPuntaje.setFillColor(sf::Color::White);
+
     // Subtítulo
     _textoSubtitulo.setFont(_fuente);
     _textoSubtitulo.setString("Presiona Enter para volver al menu");
@@ -47,7 +52,18 @@ Victoria::Victoria() : _volverAlMenu(false) {
     sf::FloatRect boundsSubtitulo = _textoSubtitulo.getLocalBounds();
     _textoSubtitulo.setOrigin(boundsSubtitulo.left + boundsSubtitulo.width / 2.0f,
                               boundsSubtitulo.top + boundsSubtitulo.height / 2.0f);
-    _textoSubtitulo.setPosition(anchoVentana / 2.0f, 350.f);
+    _textoSubtitulo.setPosition(anchoVentana / 2.0f, 400.f);
+}
+
+void Victoria::inicializar(int puntajeFinal) {
+    _puntajeFinal = puntajeFinal;
+    _textoPuntaje.setString("Puntaje Final: " + std::to_string(_puntajeFinal));
+    
+    // Calcular posición centrada del puntaje
+    sf::FloatRect boundsPuntaje = _textoPuntaje.getLocalBounds();
+    _textoPuntaje.setOrigin(boundsPuntaje.left + boundsPuntaje.width / 2.0f,
+                           boundsPuntaje.top + boundsPuntaje.height / 2.0f);
+    _textoPuntaje.setPosition(800.f / 2.0f, 280.f);
 }
 
 void Victoria::procesarEvento(const sf::Event& event, sf::RenderWindow& window) {
@@ -58,6 +74,7 @@ void Victoria::procesarEvento(const sf::Event& event, sf::RenderWindow& window) 
 
 void Victoria::draw(sf::RenderTarget& target, sf::RenderStates states) const {
     target.draw(_textoTitulo, states);
+    target.draw(_textoPuntaje, states);
     target.draw(_textoSubtitulo, states);
 }
 

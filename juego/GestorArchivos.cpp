@@ -8,22 +8,31 @@ GestorArchivos::GestorArchivos(std::string nombreArchivo)
 
 bool GestorArchivos::guardar(int puntaje) {
     FILE* pFile;
-    bool result;
+    bool result = false;
     
-    pFile = fopen(_nombreArchivo.c_str(), "ab");
+    // Intentar múltiples rutas como con las fuentes
+    std::string ruta1 = _nombreArchivo;
+    std::string ruta2 = "../" + _nombreArchivo;
+    std::string ruta3 = "../../" + _nombreArchivo;
+    const char* rutas[] = {
+        ruta1.c_str(),
+        ruta2.c_str(),
+        ruta3.c_str()
+    };
     
-    if (pFile == nullptr) {
-        return false;
+    for (int i = 0; i < 3; i++) {
+        pFile = fopen(rutas[i], "ab");
+        if (pFile != nullptr) {
+            result = fwrite(&puntaje, sizeof(int), 1, pFile);
+            fclose(pFile);
+            if (result) return true;
+        }
     }
     
-    result = fwrite(&puntaje, sizeof(int), 1, pFile);
-    
-    fclose(pFile);
-    
-    return result;
+    return false;
 }
 
-int GestorArchivos::leer(int pos) {
+int GestorArchivos::leer(int pos) const {
     FILE* pFile;
     int puntaje = -1;
     
@@ -44,42 +53,60 @@ int GestorArchivos::leer(int pos) {
     return puntaje;
 }
 
-int GestorArchivos::leerTodos(int puntajes[], int cantidad) {
+int GestorArchivos::leerTodos(int puntajes[], int cantidad) const {
     FILE* pFile;
-    int result;
+    int result = 0;
     
-    pFile = fopen(_nombreArchivo.c_str(), "rb");
+    // Intentar múltiples rutas como con las fuentes
+    std::string ruta1 = _nombreArchivo;
+    std::string ruta2 = "../" + _nombreArchivo;
+    std::string ruta3 = "../../" + _nombreArchivo;
+    const char* rutas[] = {
+        ruta1.c_str(),
+        ruta2.c_str(),
+        ruta3.c_str()
+    };
     
-    if (pFile == nullptr) {
-        return 0;
+    for (int i = 0; i < 3; i++) {
+        pFile = fopen(rutas[i], "rb");
+        if (pFile != nullptr) {
+            result = fread(puntajes, sizeof(int), cantidad, pFile);
+            fclose(pFile);
+            if (result > 0) return result;
+        }
     }
     
-    result = fread(puntajes, sizeof(int), cantidad, pFile);
-    
-    fclose(pFile);
-    
-    return result;
+    return 0;
 }
 
-int GestorArchivos::getCantidadRegistros() {
+int GestorArchivos::getCantidadRegistros() const {
     FILE* pFile;
-    int cantidad;
+    int cantidad = 0;
     
-    pFile = fopen(_nombreArchivo.c_str(), "rb");
+    // Intentar múltiples rutas como con las fuentes
+    std::string ruta1 = _nombreArchivo;
+    std::string ruta2 = "../" + _nombreArchivo;
+    std::string ruta3 = "../../" + _nombreArchivo;
+    const char* rutas[] = {
+        ruta1.c_str(),
+        ruta2.c_str(),
+        ruta3.c_str()
+    };
     
-    if (pFile == nullptr) {
-        return 0;
+    for (int i = 0; i < 3; i++) {
+        pFile = fopen(rutas[i], "rb");
+        if (pFile != nullptr) {
+            fseek(pFile, 0, SEEK_END);
+            cantidad = ftell(pFile) / sizeof(int);
+            fclose(pFile);
+            return cantidad;
+        }
     }
     
-    fseek(pFile, 0, SEEK_END);
-    cantidad = ftell(pFile) / sizeof(int);
-    
-    fclose(pFile);
-    
-    return cantidad;
+    return 0;
 }
 
-void GestorArchivos::mostrarPuntajes() {
+void GestorArchivos::mostrarPuntajes() const {
     int cantidad = getCantidadRegistros();
     
     if (cantidad == 0) {
