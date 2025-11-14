@@ -1,5 +1,6 @@
 #include <SFML/Graphics.hpp>
 #include "juego/Nivel.h"
+#include "juego/Nivel2.h"
 #include "juego/Puntaje.h"
 #include "juego/Menu.h"
 #include "juego/EstadosJuego.h"
@@ -15,7 +16,8 @@ int main()
     EstadoJuego estado = EstadoJuego::MENU;
     GestorArchivos gestor("juego/puntajes.dat");
     Menu menu;
-    Nivel nivel;
+    // TEMPORAL: para ir probando nivel2
+    Nivel2 nivel;
     Puntaje puntaje;
     GameOver gameOver;
     Victoria victoria;
@@ -68,7 +70,8 @@ int main()
             if (menu.estaIniciandoJuego()) {
                 menu.reset();
                 // Reiniciar el nivel para empezar un juego nuevo
-                nivel = Nivel();
+                // TEMPORAL: probando nivel2
+                nivel = Nivel2();
                 puntaje.reset();
                 estado = EstadoJuego::JUGANDO;
             }
