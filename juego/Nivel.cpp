@@ -102,8 +102,11 @@ void Nivel::dibujarTodo(sf::RenderTarget& target) {
 		target.draw(_plataformas[i]);
 	}
 	
+	// Solo dibujar enemigos vivos o que aún no hayan desaparecido
 	for (int i = 0; i < _cantidadEnemigos; i++) {
-		target.draw(_enemigos[i]);
+		if (_enemigos[i].estaVivo() || _enemigos[i].getBounds().left > -500.f) {
+			target.draw(_enemigos[i]);
+		}
 	}
 	
 	target.draw(_meta);

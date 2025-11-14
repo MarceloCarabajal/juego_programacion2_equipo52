@@ -77,14 +77,16 @@ void GameOver::cargarMejoresPuntajes(const GestorArchivos& gestor) {
     int* todosPuntajes = new int[cantidad];
     int leidos = gestor.leerTodos(todosPuntajes, cantidad);
     
-    // Ordenar de mayor a menor usando bubble sort
-    for (int i = 0; i < leidos - 1; i++) {
-        for (int j = 0; j < leidos - 1 - i; j++) {
-            if (todosPuntajes[j] < todosPuntajes[j + 1]) {
-                // Intercambiar valores
-                int temp = todosPuntajes[j];
-                todosPuntajes[j] = todosPuntajes[j + 1];
-                todosPuntajes[j + 1] = temp;
+    // Ordenar de mayor a menor usando bubble sort (solo si hay más de 1 elemento)
+    if (leidos > 1) {
+        for (int i = 0; i < leidos - 1; i++) {
+            for (int j = 0; j < leidos - 1 - i; j++) {
+                if (todosPuntajes[j] < todosPuntajes[j + 1]) {
+                    // Intercambiar valores
+                    int temp = todosPuntajes[j];
+                    todosPuntajes[j] = todosPuntajes[j + 1];
+                    todosPuntajes[j + 1] = temp;
+                }
             }
         }
     }

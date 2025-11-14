@@ -89,9 +89,7 @@ void Enemigo::morir() {
 
         // Espera un tiempo antes de desaparecer
         tiempoParaDesaparecer = 1.0f;
-
-        // Desaparece
-        desaparecer();
+        // NO llamar desaparecer() aca, se llamará en update() cuando tiempoParaDesaparecer <= 0
     }
 }
 
