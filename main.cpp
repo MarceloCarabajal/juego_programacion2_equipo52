@@ -5,6 +5,7 @@
 #include "juego/EstadosJuego.h"
 #include "juego/GameOver.h"
 #include "juego/Victoria.h"
+#include "juego/GestorArchivos.h"
 
 int main()
 {
@@ -12,6 +13,7 @@ int main()
     window.setFramerateLimit(60);
 
     EstadoJuego estado = EstadoJuego::MENU;
+    GestorArchivos gestor("juego/puntajes.dat");
     Menu menu;
     Nivel nivel;
     Puntaje puntaje;
@@ -84,10 +86,18 @@ int main()
 
             // Verificar si el jugador perdió todas las vidas (Game Over)
             if (nivel.gameOver()) {
+                Jugador& jugador = *nivel.getJugador();
+                int puntajeFinal = jugador.getPuntaje();
+                gestor.guardar(puntajeFinal);
+                gameOver.inicializar(puntajeFinal, gestor);
                 estado = EstadoJuego::GAME_OVER;
             }
             // Verificar si se completó el nivel
             else if (nivel.nivelCompletado()) {
+                Jugador& jugador = *nivel.getJugador();
+                int puntajeFinal = jugador.getPuntaje();
+                gestor.guardar(puntajeFinal);
+                victoria.inicializar(puntajeFinal);
                 estado = EstadoJuego::VICTORIA;
             }
 
