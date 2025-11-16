@@ -111,7 +111,9 @@
     </Link>
     <PostBuildEvent>
       <Command>if not exist "$(OutDir)recursos" mkdir "$(OutDir)recursos"
-xcopy /Y /I "$(ProjectDir)..\recursos\*" "$(OutDir)recursos\"</Command>
+if not exist "$(OutDir)recursos\sprites" mkdir "$(OutDir)recursos\sprites"
+if not exist "$(OutDir)recursos\sprites\jugador" mkdir "$(OutDir)recursos\sprites\jugador"
+xcopy /Y /I /E "$(ProjectDir)..\recursos\*" "$(OutDir)recursos\"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -129,7 +131,9 @@ xcopy /Y /I "$(ProjectDir)..\recursos\*" "$(OutDir)recursos\"</Command>
     </Link>
     <PostBuildEvent>
       <Command>if not exist "$(OutDir)recursos" mkdir "$(OutDir)recursos"
-xcopy /Y /I "$(ProjectDir)..\recursos\*" "$(OutDir)recursos\"</Command>
+if not exist "$(OutDir)recursos\sprites" mkdir "$(OutDir)recursos\sprites"
+if not exist "$(OutDir)recursos\sprites\jugador" mkdir "$(OutDir)recursos\sprites\jugador"
+xcopy /Y /I /E "$(ProjectDir)..\recursos\*" "$(OutDir)recursos\"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -168,9 +172,9 @@ xcopy /Y /I "$(ProjectDir)..\recursos\*" "$(OutDir)recursos\"</Command>
     <ClInclude Include="Puntaje.h" />
 	<ClInclude Include="Menu.h" />
 	<ClInclude Include="EstadosJuego.h" />
+	<ClInclude Include="EstadoAnimacionJugador.h" />
 	<ClInclude Include="GameOver.h" />
 	<ClInclude Include="Victoria.h" />
-	<ClInclude Include="EstadosJuego.h" />
 
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
