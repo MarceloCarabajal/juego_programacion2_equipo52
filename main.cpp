@@ -69,9 +69,7 @@ int main()
             }
         }
 
-        
-        //  LÓGICA DE CADA ESTADO
-       
+        // LÓGICA DE CADA ESTADO
 
         // MENU
         if (estado == EstadoJuego::MENU) {
