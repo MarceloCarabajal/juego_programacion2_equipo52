@@ -1,15 +1,36 @@
 #include "NivelStart.h"
+#include <iostream>
+
+const float NivelStart::TIEMPO_ESPERA = 2.5f; // 2.5 segundos antes de continuar automáticamente
 
 NivelStart::NivelStart() {
-    _fuente.loadFromFile("recursos/PressStart2P-Regular.ttf");
+    // Intentar cargar la fuente desde diferentes rutas
+    const char* rutas[] = {
+        "recursos/PressStart2P-Regular.ttf",
+        "../recursos/PressStart2P-Regular.ttf",
+        "../../recursos/PressStart2P-Regular.ttf"
+    };
+    
+    bool fuenteCargada = false;
+    for (int i = 0; i < 3; i++) {
+        if (_fuente.loadFromFile(rutas[i])) {
+            fuenteCargada = true;
+            break;
+        }
+    }
+    
+    if (!fuenteCargada) {
+        std::cerr << "Warning: no se pudo cargar la fuente NivelStart\n";
+    }
+    
     _texto.setFont(_fuente);
     _texto.setCharacterSize(28);
     _texto.setFillColor(sf::Color(255, 255, 0));
-
 }
 
 void NivelStart::setNivel(int numero) {
     _continuar = false;
+    _reloj.restart(); // Reiniciar el temporizador cuando se cambia de nivel
 
     _texto.setString("NIVEL " + std::to_string(numero));
 
@@ -23,11 +44,16 @@ void NivelStart::setNivel(int numero) {
     _texto.setPosition(x, y);
 }
 
-
-void NivelStart::procesarEvento(const sf::Event& event) {
-    if (event.type == sf::Event::KeyPressed) {
+void NivelStart::update() {
+    // Si ha pasado el tiempo de espera, continuar automáticamente
+    if (_reloj.getElapsedTime().asSeconds() >= TIEMPO_ESPERA) {
         _continuar = true;
     }
+}
+
+void NivelStart::procesarEvento(const sf::Event& event) {
+    // No hacer nada - la pantalla siempre espera el tiempo completo
+    // Esto evita que se avance accidentalmente al presionar una tecla
 }
 
 void NivelStart::draw(sf::RenderWindow& window) {

@@ -95,15 +95,14 @@ int main()
 
         // PANTALLA "NIVEL X"
         else if (estado == EstadoJuego::NIVEL_START) {
-
+            // Actualizar el temporizador para continuar automáticamente
+            nivelStart.update();
+            
+            // Verificar si el usuario quiere continuar (por tecla o automáticamente)
             if (nivelStart.continuar()) {
                 // Cambiar al nivel correspondiente
-                if (nivelActual == 1)
-                    estado = EstadoJuego::JUGANDO;
-                else if (nivelActual == 2)
-                    estado = EstadoJuego::JUGANDO;
-                else if (nivelActual == 3)
-                    estado = EstadoJuego::JUGANDO;
+                nivelStart.reset(); // Resetear el flag antes de cambiar de estado
+                estado = EstadoJuego::JUGANDO;
             }
 
             window.clear();
@@ -133,11 +132,12 @@ int main()
                     nivelStart.reset();
                     estado = EstadoJuego::NIVEL_START;
                 }
-
-                window.clear();
-                nivel1.dibujarTodo(window);
-                window.draw(puntaje);
-                window.display();
+                else {
+                    window.clear();
+                    nivel1.dibujarTodo(window);
+                    window.draw(puntaje);
+                    window.display();
+                }
             }
 
             else if (nivelActual == 2) {
@@ -158,11 +158,12 @@ int main()
                     nivelStart.reset();
                     estado = EstadoJuego::NIVEL_START;
                 }
-
-                window.clear();
-                nivel2.dibujarTodo(window);
-                window.draw(puntaje);
-                window.display();
+                else {
+                    window.clear();
+                    nivel2.dibujarTodo(window);
+                    window.draw(puntaje);
+                    window.display();
+                }
             }
 
             else if (nivelActual == 3) {

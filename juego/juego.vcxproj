@@ -140,6 +140,8 @@ xcopy /Y /I "$(ProjectDir)..\recursos\*" "$(OutDir)recursos\"</Command>
     <ClCompile Include="Entidad.cpp" />
     <ClCompile Include="Nivel.cpp" />
     <ClCompile Include="Nivel2.cpp" />
+	<ClCompile Include="Nivel3.cpp" />
+	<ClCompile Include="NivelStart.cpp" />
     <ClCompile Include="Colisiones.cpp" />
     <ClCompile Include="Meta.cpp" />
     <ClCompile Include="GestorArchivos.cpp" />
@@ -158,6 +160,8 @@ xcopy /Y /I "$(ProjectDir)..\recursos\*" "$(OutDir)recursos\"</Command>
     <ClInclude Include="Entidad.h" />
     <ClInclude Include="Nivel.h" />
     <ClInclude Include="Nivel2.h" />
+	<ClInclude Include="Nivel3.h" />
+	<ClInclude Include="NivelStart.h" />
     <ClInclude Include="Colisiones.h" />
     <ClInclude Include="Meta.h" />
     <ClInclude Include="GestorArchivos.h" />
@@ -166,6 +170,8 @@ xcopy /Y /I "$(ProjectDir)..\recursos\*" "$(OutDir)recursos\"</Command>
 	<ClInclude Include="EstadosJuego.h" />
 	<ClInclude Include="GameOver.h" />
 	<ClInclude Include="Victoria.h" />
+	<ClInclude Include="EstadosJuego.h" />
+
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets" />
