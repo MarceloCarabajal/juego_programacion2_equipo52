@@ -6,10 +6,4 @@ enum class EstadoAnimacionJugador {
     SALTANDO
 };
 
-// para Enemigo, crear EstadoAnimacionEnemigo.h con estados como:
-// enum class EstadoAnimacionEnemigo {
-//     CAMINANDO,
-//     MUERTO,
-//     etc.
-// };
 
