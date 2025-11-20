@@ -37,7 +37,10 @@ private:
     // Estado
     bool vivo;
     bool _derrotado;
+    bool _muriendo;
     float tiempoParaDesaparecer;
+    sf::Clock _relojMuerte;
+    static const float TIEMPO_DESAPARICION; // Tiempo en segundos para desaparecer completamente
 
 private:
     void cargarTexturas();
@@ -58,6 +61,7 @@ public:
     void derrotar() { _derrotado = true; }
     bool estaDerrotado() const { return _derrotado; }
     bool estaVivo() const { return vivo; }
+    bool estaMuriendo() const { return _muriendo; }
 
     void desaparecer() {
         vivo = false;

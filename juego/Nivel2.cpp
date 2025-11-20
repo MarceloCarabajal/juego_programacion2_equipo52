@@ -19,40 +19,52 @@ void Nivel2::cargarPlataformas() {
 	_plataformas[_cantidadPlataformas] = Plataforma(0.f, 550.f, 800.f, 50.f);
 	_cantidadPlataformas++;
 	
+	// Plataformas flotantes - con color diferente (marrón/beige)
+	sf::Color colorPlataformaFlotante(139, 90, 43); // Color marrón/beige para plataformas flotantes
+	
 	// ruta hacia la meta: plataformas escalonadas del lado izquierdo
 	// primera plataforma - inicio del camino
 	_plataformas[_cantidadPlataformas] = Plataforma(50.f, 480.f, 120.f, 20.f);
+	_plataformas[_cantidadPlataformas].setColor(colorPlataformaFlotante);
 	_cantidadPlataformas++;
 	
 	// segunda plataforma - un poco más arriba y a la derecha
 	_plataformas[_cantidadPlataformas] = Plataforma(200.f, 420.f, 100.f, 20.f);
+	_plataformas[_cantidadPlataformas].setColor(colorPlataformaFlotante);
 	_cantidadPlataformas++;
 	
 	// tercera plataforma - más arriba, acercándose a la meta
 	_plataformas[_cantidadPlataformas] = Plataforma(100.f, 360.f, 100.f, 20.f);
+	_plataformas[_cantidadPlataformas].setColor(colorPlataformaFlotante);
 	_cantidadPlataformas++;
 	
 	// cuarta plataforma - casi a la altura de la meta
 	_plataformas[_cantidadPlataformas] = Plataforma(50.f, 280.f, 120.f, 20.f);
+	_plataformas[_cantidadPlataformas].setColor(colorPlataformaFlotante);
 	_cantidadPlataformas++;
 	
 	// quinta plataforma - a la altura de la meta, permite llegar
 	_plataformas[_cantidadPlataformas] = Plataforma(20.f, 220.f, 100.f, 20.f);
+	_plataformas[_cantidadPlataformas].setColor(colorPlataformaFlotante);
 	_cantidadPlataformas++;
 	
 	// plataforma final - justo antes de la meta, permite el salto final
 	// posicionada para que el jugador pueda saltar fácilmente a la meta
 	_plataformas[_cantidadPlataformas] = Plataforma(40.f, 180.f, 80.f, 20.f);
+	_plataformas[_cantidadPlataformas].setColor(colorPlataformaFlotante);
 	_cantidadPlataformas++;
 	
 	// plataformas del lado derecho - para dificultad adicional
 	_plataformas[_cantidadPlataformas] = Plataforma(650.f, 450.f, 100.f, 20.f);
+	_plataformas[_cantidadPlataformas].setColor(colorPlataformaFlotante);
 	_cantidadPlataformas++;
 	
 	_plataformas[_cantidadPlataformas] = Plataforma(600.f, 350.f, 80.f, 20.f);
+	_plataformas[_cantidadPlataformas].setColor(colorPlataformaFlotante);
 	_cantidadPlataformas++;
 	
 	_plataformas[_cantidadPlataformas] = Plataforma(700.f, 250.f, 80.f, 20.f);
+	_plataformas[_cantidadPlataformas].setColor(colorPlataformaFlotante);
 	_cantidadPlataformas++;
 }
 
@@ -150,9 +162,9 @@ void Nivel2::dibujarTodo(sf::RenderTarget& target) {
 		target.draw(_plataformas[i]);
 	}
 	
-	// solo dibujar enemigos vivos o que aún no hayan desaparecido
+	// Dibujar enemigos vivos o que están en proceso de desaparecer
 	for (int i = 0; i < _cantidadEnemigos; i++) {
-		if (_enemigos[i].estaVivo() || _enemigos[i].getBounds().left > -500.f) {
+		if (_enemigos[i].estaVivo() || _enemigos[i].estaMuriendo()) {
 			target.draw(_enemigos[i]);
 		}
 	}

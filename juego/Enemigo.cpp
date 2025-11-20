@@ -6,6 +6,7 @@
 const float Enemigo::VELOCIDAD_ANIMACION = 10.f;
 const int Enemigo::FRAMES_IDLE[2] = {0, 1};
 const int Enemigo::FRAMES_WALK[4] = {2, 3, 4, 5};
+const float Enemigo::TIEMPO_DESAPARICION = 0.8f; // 0.8 segundos para desaparecer
 
 // Constructores
 Enemigo::Enemigo() : Enemigo(0.f, 0.f) {}
@@ -14,6 +15,8 @@ Enemigo::Enemigo(float x, float y, float a, float h)
 : Entidad(x, y, a, h),
   vivo(true),
   _derrotado(false),
+  _muriendo(false),
+  tiempoParaDesaparecer(0.f),
   limiteIzquierdo(x - 60.f),
   limiteDerecho(x + 60.f),
   velocidadPatrullaje(1.0f),
@@ -84,7 +87,33 @@ void Enemigo::cargarTexturas() {
 
 // Update general
 void Enemigo::update() {
+    // Si está muriendo, actualizar la animación de desvanecimiento
+    if (_muriendo) {
+        float tiempoTranscurrido = _relojMuerte.getElapsedTime().asSeconds();
+        float progreso = tiempoTranscurrido / TIEMPO_DESAPARICION;
+        
+        if (progreso >= 1.0f) {
+            // Completamente desaparecido, marcar como muerto
+            vivo = false;
+            _muriendo = false;
+            return;
+        }
+        
+        // Calcular alpha (transparencia) - va de 255 a 0
+        int alpha = static_cast<int>(255 * (1.0f - progreso));
+        _sprite.setColor(sf::Color(255, 255, 255, alpha));
+        
+        // Opcional: hacer que el enemigo se mueva ligeramente hacia abajo mientras desaparece
+        posY += 0.5f; // Movimiento suave hacia abajo
+        
+        _sprite.setPosition(posX, posY);
+        return;
+    }
+    
     if (!vivo) return;
+
+    // Asegurar que el color esté en blanco (sin transparencia) cuando está vivo
+    _sprite.setColor(sf::Color::White);
 
     patrullar();
     actualizarAnimacion();
@@ -193,10 +222,17 @@ bool Enemigo::colisionConJugador(const Entidad& jugador) {
 
 // Morir
 void Enemigo::morir() {
-    vivo = false;
+    if (!vivo || _muriendo) return; // Ya está muerto o muriendo
+    
+    _muriendo = true;
+    _relojMuerte.restart();
+    // No marcar como muerto inmediatamente, esperar a que termine la animación
 }
 
 // Dibujar
 void Enemigo::draw(sf::RenderTarget& t, sf::RenderStates s) const {
-    if (vivo) t.draw(_sprite, s);
+    // Dibujar si está vivo o si está en proceso de desaparecer
+    if (vivo || _muriendo) {
+        t.draw(_sprite, s);
+    }
 }
