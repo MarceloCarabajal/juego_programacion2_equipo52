@@ -13,7 +13,7 @@
 
 int main()
 {
-    sf::RenderWindow window(sf::VideoMode(800, 600), "Mini Mario Bros");
+    sf::RenderWindow window(sf::VideoMode(800, 600), "Lara Bros");
     window.setFramerateLimit(60);
 
     EstadoJuego estado = EstadoJuego::MENU;
