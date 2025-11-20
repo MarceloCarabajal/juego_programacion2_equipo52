@@ -29,6 +29,9 @@ juego/output/
 /Release/
 /x64/
 /x86/
+juego/Debug/
+juego/x64/
+juego/Release/
 /*.log
 
 # --- Archivos generados por Visual Studio (si abrís el proyecto ahí) ---
@@ -62,6 +65,7 @@ recursos/sprites/*
 !recursos/sprites/enemigo/
 !recursos/sprites/enemigo/8 idle.png
 !recursos/sprites/enemigo/8 walk.png
+recursos/background/
 
 # --- Fuentes ---
 *.ttf

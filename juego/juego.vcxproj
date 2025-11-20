@@ -153,6 +153,7 @@ xcopy /Y /I /E "$(ProjectDir)..\recursos\*" "$(OutDir)recursos\"</Command>
 	<ClCompile Include="Menu.cpp" />
 	<ClCompile Include="GameOver.cpp" />
 	<ClCompile Include="Victoria.cpp" />
+	<ClCompile Include="Background.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -175,6 +176,7 @@ xcopy /Y /I /E "$(ProjectDir)..\recursos\*" "$(OutDir)recursos\"</Command>
 	<ClInclude Include="EstadoAnimacionJugador.h" />
 	<ClInclude Include="GameOver.h" />
 	<ClInclude Include="Victoria.h" />
+	<ClInclude Include="Background.h" />
 
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
