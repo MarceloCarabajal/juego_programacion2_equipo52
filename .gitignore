@@ -65,7 +65,11 @@ recursos/sprites/*
 !recursos/sprites/enemigo/
 !recursos/sprites/enemigo/8 idle.png
 !recursos/sprites/enemigo/8 walk.png
-recursos/background/
+# --- Backgrounds: excluimos la carpeta pero permitimos los archivos específicos ---
+recursos/background/*
+!recursos/background/nivel1.jpg
+!recursos/background/nivel2.jpg
+!recursos/background/nivel3.jpg
 
 # --- Fuentes ---
 *.ttf
