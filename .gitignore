@@ -60,12 +60,16 @@ Thumbs.db
 *.pdb
 
 # --- Excluimos sprites masivos, PERO preservamos los que sí queremos subir ---
-# (cuidado: deja subir solo los de enemigo)
+# (cuidado: deja subir solo los de enemigo y backgrounds)
 recursos/sprites/*
 !recursos/sprites/enemigo/
 !recursos/sprites/enemigo/8 idle.png
 !recursos/sprites/enemigo/8 walk.png
-# --- Backgrounds: excluimos la carpeta pero permitimos los archivos específicos ---
+!recursos/sprites/background/
+!recursos/sprites/background/nivel1.jpg
+!recursos/sprites/background/nivel2.jpg
+!recursos/sprites/background/nivel3.jpg
+# --- Backgrounds: excluimos la carpeta pero permitimos los archivos específicos (ubicación antigua) ---
 recursos/background/*
 !recursos/background/nivel1.jpg
 !recursos/background/nivel2.jpg
