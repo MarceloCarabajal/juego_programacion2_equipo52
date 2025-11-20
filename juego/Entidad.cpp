@@ -7,7 +7,3 @@ Entidad::Entidad(float posX, float posY, float ancho, float alto)
 bool Entidad::colisionaCon(const Entidad& otra) const {
     return getRectanguloColision().intersects(otra.getRectanguloColision());
 }
-
-sf::FloatRect Entidad::getRectanguloColision() const {
-    return sf::FloatRect(posX, posY, ancho, alto);
-}

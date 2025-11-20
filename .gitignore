@@ -75,8 +75,9 @@ recursos/background/*
 *.ttf
 /*.otf
 
-# --- Audio ---
-*.wav
+# --- Audio: excluimos archivos de audio pero permitimos los específicos ---
+recursos/sounds/*
+!recursos/sounds/lara_sound.wav
 *.ogg
 *.mp3
 

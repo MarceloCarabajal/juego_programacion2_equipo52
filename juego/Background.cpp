@@ -10,14 +10,14 @@ Background::Background(const std::string& nombreImagen) : _anchoVentana(800.f), 
 
 void Background::cargarImagen(const std::string& nombreImagen) {
     // Intentar cargar desde múltiples rutas (igual que Jugador y Enemigo)
-    // Las imágenes están en recursos/background/ (no en recursos/sprites/background/)
+    // Las imágenes están en recursos/sprites/background/ (ubicación actualizada)
     const char* rutasBase[] = {
-        "recursos/background/",
-        "../recursos/background/",
-        "../../recursos/background/",
         "recursos/sprites/background/",
         "../recursos/sprites/background/",
         "../../recursos/sprites/background/",
+        "recursos/background/",
+        "../recursos/background/",
+        "../../recursos/background/",
         ""
     };
     

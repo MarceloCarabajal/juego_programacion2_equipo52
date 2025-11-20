@@ -1,4 +1,5 @@
 #include <SFML/Graphics.hpp>
+#include <SFML/Audio.hpp>
 #include "juego/Nivel.h"
 #include "juego/Nivel2.h"
 #include "juego/Nivel3.h"
@@ -10,6 +11,7 @@
 #include "juego/Victoria.h"
 #include "juego/GestorArchivos.h"
 #include "juego/Background.h"
+#include <iostream>
 
 int main()
 {
@@ -19,6 +21,34 @@ int main()
     EstadoJuego estado = EstadoJuego::MENU;
     GestorArchivos gestor("juego/puntajes.dat");
     Menu menu;
+
+    // Cargar sonido de inicio del juego
+    sf::SoundBuffer bufferSonido;
+    sf::Sound sonidoInicio;
+    bool sonidoCargado = false;
+    
+    // Intentar cargar el sonido desde múltiples rutas
+    const char* rutasSonido[] = {
+        "recursos/sounds/lara_sound.wav",
+        "../recursos/sounds/lara_sound.wav",
+        "../../recursos/sounds/lara_sound.wav",
+        "sounds/lara_sound.wav",
+        ""
+    };
+    
+    for (int i = 0; i < 5; i++) {
+        if (bufferSonido.loadFromFile(rutasSonido[i])) {
+            sonidoInicio.setBuffer(bufferSonido);
+            sonidoInicio.setLoop(true); // Reproducir en bucle continuo
+            sonidoCargado = true;
+            std::cout << "Sonido cargado desde: " << rutasSonido[i] << std::endl;
+            break;
+        }
+    }
+    
+    if (!sonidoCargado) {
+        std::cerr << "Warning: No se pudo cargar el sonido lara_sound.wav" << std::endl;
+    }
 
     // Backgrounds para cada nivel (usando clase Background)
     Background fondo1("nivel1.jpg");
@@ -60,6 +90,11 @@ int main()
 
             // GAME OVER
             else if (estado == EstadoJuego::GAME_OVER) {
+                // Detener el sonido cuando hay game over
+                if (sonidoCargado && sonidoInicio.getStatus() == sf::Sound::Playing) {
+                    sonidoInicio.stop();
+                }
+                
                 gameOver.procesarEvento(event, window);
                 if (gameOver.volverAlMenu()) {
                     gameOver.reset();
@@ -70,6 +105,11 @@ int main()
 
             // VICTORIA
             else if (estado == EstadoJuego::VICTORIA) {
+                // Detener el sonido cuando hay victoria
+                if (sonidoCargado && sonidoInicio.getStatus() == sf::Sound::Playing) {
+                    sonidoInicio.stop();
+                }
+                
                 victoria.procesarEvento(event, window);
                 if (victoria.volverAlMenu()) {
                     victoria.reset();
@@ -83,6 +123,11 @@ int main()
 
         // MENU
         if (estado == EstadoJuego::MENU) {
+            // Detener el sonido cuando estamos en el menú
+            if (sonidoCargado && sonidoInicio.getStatus() == sf::Sound::Playing) {
+                sonidoInicio.stop();
+            }
+            
             if (menu.estaIniciandoJuego()) {
                 menu.reset();
 
@@ -111,6 +156,11 @@ int main()
                 // Cambiar al nivel correspondiente
                 nivelStart.reset(); // Resetear el flag antes de cambiar de estado
                 estado = EstadoJuego::JUGANDO;
+                
+                // Iniciar el sonido cuando empieza a jugar (se reproducirá en bucle)
+                if (sonidoCargado && sonidoInicio.getStatus() != sf::Sound::Playing) {
+                    sonidoInicio.play();
+                }
             }
 
             window.clear();
