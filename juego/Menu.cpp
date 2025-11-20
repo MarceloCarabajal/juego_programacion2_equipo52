@@ -21,10 +21,10 @@ Menu::Menu() : _iniciandoJuego(false) {
     }
 
     _titulo.setFont(_fuente);
-    _titulo.setString("MINI MARIO BROS");
-    _titulo.setCharacterSize(24);
+    _titulo.setString("LARA BROS");
+    _titulo.setCharacterSize(28);
     _titulo.setFillColor(sf::Color::Yellow);
-    _titulo.setPosition(200, 150);
+    _titulo.setPosition(260, 150);
 
     _opcionJugar.setFont(_fuente);
     _opcionJugar.setString("Presiona ENTER para jugar");
