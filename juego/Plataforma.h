@@ -11,6 +11,9 @@ public:
 	// getters que vamos a usar
 	const sf::FloatRect getBounds() const { return _body.getGlobalBounds(); }
 	const sf::FloatRect getCollider() const { return getBounds(); }
+	
+	// Método para cambiar el color de la plataforma
+	void setColor(const sf::Color& color) { _body.setFillColor(color); }
 
 private:
 	sf::RectangleShape _body;

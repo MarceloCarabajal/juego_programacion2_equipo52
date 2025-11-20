@@ -9,6 +9,7 @@
 #include "juego/GameOver.h"
 #include "juego/Victoria.h"
 #include "juego/GestorArchivos.h"
+#include "juego/Background.h"
 
 int main()
 {
@@ -18,6 +19,15 @@ int main()
     EstadoJuego estado = EstadoJuego::MENU;
     GestorArchivos gestor("juego/puntajes.dat");
     Menu menu;
+
+    // Backgrounds para cada nivel (usando clase Background)
+    Background fondo1("nivel1.jpg");
+    Background fondo2("nivel2.jpg");
+    Background fondo3("nivel3.jpg");
+    
+    fondo1.setTamanoVentana(800.f, 600.f);
+    fondo2.setTamanoVentana(800.f, 600.f);
+    fondo3.setTamanoVentana(800.f, 600.f);
 
     // Niveles
     Nivel nivel1;
@@ -132,6 +142,7 @@ int main()
                 }
                 else {
                     window.clear();
+                    window.draw(fondo1);
                     nivel1.dibujarTodo(window);
                     window.draw(puntaje);
                     window.display();
@@ -158,6 +169,7 @@ int main()
                 }
                 else {
                     window.clear();
+                    window.draw(fondo2);
                     nivel2.dibujarTodo(window);
                     window.draw(puntaje);
                     window.display();
@@ -183,6 +195,7 @@ int main()
                 }
 
                 window.clear();
+                window.draw(fondo3);
                 nivel3.dibujarTodo(window);
                 window.draw(puntaje);
                 window.display();

@@ -12,20 +12,27 @@ void Nivel::cargarPlataformas() {
 	_plataformas[_cantidadPlataformas] = Plataforma(0.f, 550.f, 800.f, 50.f);
 	_cantidadPlataformas++;
 	
-	// Plataformas flotantes (hardcodeadas)
+	// Plataformas flotantes (hardcodeadas) - con color diferente (marrón/beige)
+	sf::Color colorPlataformaFlotante(139, 90, 43); // Color marrón/beige para plataformas flotantes
+	
 	_plataformas[_cantidadPlataformas] = Plataforma(200.f, 450.f, 100.f, 20.f);
+	_plataformas[_cantidadPlataformas].setColor(colorPlataformaFlotante);
 	_cantidadPlataformas++;
 	
 	_plataformas[_cantidadPlataformas] = Plataforma(400.f, 350.f, 100.f, 20.f);
+	_plataformas[_cantidadPlataformas].setColor(colorPlataformaFlotante);
 	_cantidadPlataformas++;
 	
 	_plataformas[_cantidadPlataformas] = Plataforma(600.f, 250.f, 100.f, 20.f);
+	_plataformas[_cantidadPlataformas].setColor(colorPlataformaFlotante);
 	_cantidadPlataformas++;
 	
 	_plataformas[_cantidadPlataformas] = Plataforma(100.f, 300.f, 80.f, 20.f);
+	_plataformas[_cantidadPlataformas].setColor(colorPlataformaFlotante);
 	_cantidadPlataformas++;
 	
 	_plataformas[_cantidadPlataformas] = Plataforma(500.f, 150.f, 80.f, 20.f);
+	_plataformas[_cantidadPlataformas].setColor(colorPlataformaFlotante);
 	_cantidadPlataformas++;
 }
 
@@ -102,9 +109,9 @@ void Nivel::dibujarTodo(sf::RenderTarget& target) {
 		target.draw(_plataformas[i]);
 	}
 	
-	// Solo dibujar enemigos vivos o que aún no hayan desaparecido
+	// Dibujar enemigos vivos o que están en proceso de desaparecer
 	for (int i = 0; i < _cantidadEnemigos; i++) {
-		if (_enemigos[i].estaVivo() || _enemigos[i].getBounds().left > -500.f) {
+		if (_enemigos[i].estaVivo() || _enemigos[i].estaMuriendo()) {
 			target.draw(_enemigos[i]);
 		}
 	}
