@@ -15,6 +15,22 @@ Nivel3::Nivel3()
     _jugador.setEnSuelo(true);
 }
 
+Nivel3::Nivel3(int puntajeInicial)
+    : _cantidadPlataformas(0), _cantidadEnemigos(0), _meta(720.f, 120.f, 50.f, 100.f)
+{
+    _nivelCompletado = false;
+    _gameOver = false;
+
+    _jugador.setPuntaje(puntajeInicial);
+    cargarPlataformas();
+    posicionarEnemigos();
+    colocarMeta();
+
+    _jugador.setPosX(50.f);
+    _jugador.setPosY(518.f);
+    _jugador.setEnSuelo(true);
+}
+
 void Nivel3::cargarPlataformas() {
     _cantidadPlataformas = 0;
 

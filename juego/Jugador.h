@@ -17,7 +17,7 @@ public:
     bool estaSobrePlataforma(const sf::FloatRect& platformBounds) const;
     const sf::FloatRect getBounds() const { return getRectanguloColision(); }
 
-    sf::Vector2f getVelocidad() const { return sf::Vector2f(velX, velY); }
+    sf::Vector2f getVelocidad() const { return sf::Vector2f(_velX, _velY); }
 
     void setEnSuelo(bool enSuelo) { _enSuelo = enSuelo; }
 
@@ -25,6 +25,7 @@ public:
     int getVidas() const { return _vidas; }
     int getPuntaje() const { return _puntaje; }
     void sumarPuntos(int p) { _puntaje += p; }
+    void setPuntaje(int p) { _puntaje = p; }
     void perderVida();  // implementación en .cpp
 
     bool isOnGround() const { return _enSuelo; }

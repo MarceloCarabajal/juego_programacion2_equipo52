@@ -12,6 +12,7 @@ public:
     static const int MAX_ENEMIGOS = 10;
 
     Nivel3();
+    Nivel3(int puntajeInicial); // Constructor con puntaje inicial
 
     void cargarPlataformas();
     void posicionarEnemigos();
@@ -21,7 +22,7 @@ public:
     void update();
     void dibujarTodo(sf::RenderTarget& target);
 
-    Jugador* getJugador() { return &_jugador; }
+    Jugador& getJugador() { return _jugador; }
 
     bool nivelCompletado() const { return _nivelCompletado; }
     bool gameOver() const { return _gameOver; }

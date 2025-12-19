@@ -6,6 +6,13 @@ Nivel::Nivel() : _cantidadPlataformas(0), _cantidadEnemigos(0), _meta(700.f, 100
 	colocarMeta();
 }
 
+Nivel::Nivel(int puntajeInicial) : _cantidadPlataformas(0), _cantidadEnemigos(0), _meta(700.f, 100.f, 50.f, 100.f) {
+	_jugador.setPuntaje(puntajeInicial);
+	cargarPlataformas();
+	posicionarEnemigos();
+	colocarMeta();
+}
+
 void Nivel::cargarPlataformas() {
 	_cantidadPlataformas = 0;
 	

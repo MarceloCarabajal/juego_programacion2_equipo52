@@ -16,40 +16,40 @@ public:
     virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const = 0;
    
     // Getters de posición
-    float getPosX() const { return posX; }
-    float getPosY() const { return posY; }
-    sf::Vector2f getPosicion() const { return sf::Vector2f(posX, posY); }
+    float getPosX() const { return _posX; }
+    float getPosY() const { return _posY; }
+    sf::Vector2f getPosicion() const { return sf::Vector2f(_posX, _posY); }
     
     // Getters de dimensiones
-    float getAncho() const { return ancho; }
-    float getAlto() const { return alto; }
-    sf::Vector2f getTamano() const { return sf::Vector2f(ancho, alto); }
+    float getAncho() const { return _ancho; }
+    float getAlto() const { return _alto; }
+    sf::Vector2f getTamano() const { return sf::Vector2f(_ancho, _alto); }
     
     // Getters de velocidad
-    float getVelX() const { return velX; }
-    float getVelY() const { return velY; }
-    sf::Vector2f getVelocidad() const { return sf::Vector2f(velX, velY); }
+    float getVelX() const { return _velX; }
+    float getVelY() const { return _velY; }
+    sf::Vector2f getVelocidad() const { return sf::Vector2f(_velX, _velY); }
     
     // Setters de posición
-    void setPosX(float x) { posX = x; }
-    void setPosY(float y) { posY = y; }
-    void setPosicion(float x, float y) { posX = x; posY = y; }
-    void setPosicion(const sf::Vector2f& pos) { posX = pos.x; posY = pos.y; }
+    void setPosX(float x) { _posX = x; }
+    void setPosY(float y) { _posY = y; }
+    void setPosicion(float x, float y) { _posX = x; _posY = y; }
+    void setPosicion(const sf::Vector2f& pos) { _posX = pos.x; _posY = pos.y; }
     
     // Setters de velocidad
-    void setVelX(float vx) { velX = vx; }
-    void setVelY(float vy) { velY = vy; }
-    void setVelocidad(float vx, float vy) { velX = vx; velY = vy; }
-    void setVelocidad(const sf::Vector2f& vel) { velX = vel.x; velY = vel.y; }
+    void setVelX(float vx) { _velX = vx; }
+    void setVelY(float vy) { _velY = vy; }
+    void setVelocidad(float vx, float vy) { _velX = vx; _velY = vy; }
+    void setVelocidad(const sf::Vector2f& vel) { _velX = vel.x; _velY = vel.y; }
     
     // Métodos de colisión
     bool colisionaCon(const Entidad& otra) const;
     sf::FloatRect getRectanguloColision() const { 
-        return sf::FloatRect(posX, posY, ancho, alto); 
+        return sf::FloatRect(_posX, _posY, _ancho, _alto); 
     }
 
 protected:
-    float posX, posY;    // Posición
-    float velX, velY;    // Velocidad
-    float ancho, alto;   // Dimensiones
+    float _posX, _posY;    // Posición
+    float _velX, _velY;    // Velocidad
+    float _ancho, _alto;   // Dimensiones
 };

@@ -12,6 +12,17 @@ Nivel2::Nivel2() : _cantidadPlataformas(0), _cantidadEnemigos(0), _meta(50.f, 10
 	_jugador.setEnSuelo(true);
 }
 
+Nivel2::Nivel2(int puntajeInicial) : _cantidadPlataformas(0), _cantidadEnemigos(0), _meta(50.f, 100.f, 50.f, 100.f) {
+	_jugador.setPuntaje(puntajeInicial);
+	cargarPlataformas();
+	posicionarEnemigos();
+	colocarMeta();
+	// reposicionar jugador en el suelo al inicio del nivel
+	_jugador.setPosX(100.f);
+	_jugador.setPosY(518.f);
+	_jugador.setEnSuelo(true);
+}
+
 void Nivel2::cargarPlataformas() {
 	_cantidadPlataformas = 0;
 	

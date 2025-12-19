@@ -26,7 +26,7 @@ Jugador::Jugador(int numeroPersonaje)
 	
 	// Configurar sprite inicial
 	_sprite.setTexture(_texturaIdle);
-	_sprite.setPosition(posX, posY);
+	_sprite.setPosition(_posX, _posY);
 	
 	// Establecer el primer frame de la animación idle (frame 0, primera columna)
 	_sprite.setTextureRect(obtenerRectanguloFrame(FRAMES_IDLE[0], _texturaIdle));
@@ -34,8 +34,8 @@ Jugador::Jugador(int numeroPersonaje)
 	// Ajustar tamaño del sprite al tamaño de colisión (32x32)
 	sf::IntRect rectFrame = _sprite.getTextureRect();
 	if (rectFrame.width > 0 && rectFrame.height > 0) {
-		float escalaX = ancho / static_cast<float>(rectFrame.width);
-		float escalaY = alto / static_cast<float>(rectFrame.height);
+		float escalaX = _ancho / static_cast<float>(rectFrame.width);
+		float escalaY = _alto / static_cast<float>(rectFrame.height);
 		_sprite.setScale(escalaX, escalaY);
 	}
 }
@@ -43,20 +43,20 @@ Jugador::Jugador(int numeroPersonaje)
 void Jugador::cmd() {
 	// movimiento horizontal
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::A) || sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
-		velX = -5.0f;
+		_velX = -5.0f;
 	}
 	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::D) || sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
-		velX = 5.0f;
+		_velX = 5.0f;
 	}
 	else {
-		velX = 0.0f;
+		_velX = 0.0f;
 	}
 	
 	// salto
 	if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Space) || 
 		 sf::Keyboard::isKeyPressed(sf::Keyboard::W) || 
 		 sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) && _enSuelo) {
-		velY = _velocidadSalto;
+		_velY = _velocidadSalto;
 		_enSuelo = false;
 	}
 }
@@ -64,34 +64,34 @@ void Jugador::cmd() {
 void Jugador::update() {
 	// Aplicar gravedad
 	if (!_enSuelo) {
-		velY += _gravedad;
+		_velY += _gravedad;
 	}
 	
 	// Limitar velocidad de caída
-	if (velY > 15.0f) {
-		velY = 15.0f;
+	if (_velY > 15.0f) {
+		_velY = 15.0f;
 	}
 	
 	// Actualizar posición usando velocidad de Entidad
-	posX += velX;
-	posY += velY;
+	_posX += _velX;
+	_posY += _velY;
 	
 	// Limitar a los bordes de la pantalla
-	if (posX < 0) {
-		posX = 0;
-		velX = 0;
+	if (_posX < 0) {
+		_posX = 0;
+		_velX = 0;
 	}
-	if (posX + ancho > 800) {
-		posX = 800 - ancho;
-		velX = 0;
+	if (_posX + _ancho > 800) {
+		_posX = 800 - _ancho;
+		_velX = 0;
 	}
-	if (posY < 0) {
-		posY = 0;
-		velY = 0;
+	if (_posY < 0) {
+		_posY = 0;
+		_velY = 0;
 	}
-	if (posY + alto > 600) {
-		posY = 600 - alto;
-		velY = 0;
+	if (_posY + _alto > 600) {
+		_posY = 600 - _alto;
+		_velY = 0;
 		_enSuelo = true;
 	}
 
@@ -109,9 +109,9 @@ void Jugador::update() {
 	sf::Vector2f posicionAntes = _sprite.getPosition();
 	
 	// Actualizar dirección del sprite
-	if (velX > 0) {
+	if (_velX > 0) {
 		_mirandoDerecha = true;
-	} else if (velX < 0) {
+	} else if (_velX < 0) {
 		_mirandoDerecha = false;
 	}
 	
@@ -142,18 +142,18 @@ void Jugador::update() {
 	}
 	
 	// Sincronizar sprite con posición de Entidad
-	_sprite.setPosition(posX, posY);
+	_sprite.setPosition(_posX, _posY);
 }
 
 void Jugador::checkCollision(const sf::FloatRect& platformBounds) {
 	sf::FloatRect jugadorBounds = getRectanguloColision();
 	
 	if (jugadorBounds.intersects(platformBounds)) {
-		if (velY > 0 && jugadorBounds.top < platformBounds.top) {
-			posY = platformBounds.top - alto;
-			velY = 0;
+		if (_velY > 0 && jugadorBounds.top < platformBounds.top) {
+			_posY = platformBounds.top - _alto;
+			_velY = 0;
 			_enSuelo = true;
-			_sprite.setPosition(posX, posY);
+			_sprite.setPosition(_posX, _posY);
 		}
 	}
 }
@@ -251,7 +251,7 @@ void Jugador::actualizarAnimacion() {
 	if (!_enSuelo) {
 		// Está en el aire (saltando o cayendo)
 		nuevoEstado = EstadoAnimacionJugador::SALTANDO;
-	} else if (velX != 0.0f) {
+	} else if (_velX != 0.0f) {
 		// Está en el suelo y moviéndose
 		nuevoEstado = EstadoAnimacionJugador::CAMINANDO;
 	} else {
@@ -299,8 +299,8 @@ void Jugador::actualizarFrameAnimacion() {
 	// Reajustar escala después de cambiar frame (por si el tamaño del frame cambió)
 	sf::IntRect rectFrame = _sprite.getTextureRect();
 	if (rectFrame.width > 0 && rectFrame.height > 0) {
-		float escalaX = ancho / static_cast<float>(rectFrame.width);
-		float escalaY = alto / static_cast<float>(rectFrame.height);
+		float escalaX = _ancho / static_cast<float>(rectFrame.width);
+		float escalaY = _alto / static_cast<float>(rectFrame.height);
 		_sprite.setScale(escalaX, escalaY);
 	}
 }

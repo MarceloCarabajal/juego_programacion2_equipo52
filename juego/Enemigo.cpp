@@ -13,14 +13,14 @@ Enemigo::Enemigo() : Enemigo(0.f, 0.f) {}
 
 Enemigo::Enemigo(float x, float y, float a, float h)
 : Entidad(x, y, a, h),
-  vivo(true),
+  _vivo(true),
   _derrotado(false),
   _muriendo(false),
-  tiempoParaDesaparecer(0.f),
-  limiteIzquierdo(x - 60.f),
-  limiteDerecho(x + 60.f),
-  velocidadPatrullaje(1.0f),
-  moviendoDerecha(true),
+  _tiempoParaDesaparecer(0.f),
+  _limiteIzquierdo(x - 60.f),
+  _limiteDerecho(x + 60.f),
+  _velocidadPatrullaje(1.0f),
+  _moviendoDerecha(true),
   _frameIdle(0),
   _frameWalk(0),
   _mirandoDerecha(true),
@@ -35,12 +35,12 @@ Enemigo::Enemigo(float x, float y, float a, float h)
     // Escala al tamaño de colisión
     sf::IntRect rect = _sprite.getTextureRect();
     if (rect.width > 0 && rect.height > 0) {
-        float sx = ancho / static_cast<float>(rect.width);
-        float sy = alto / static_cast<float>(rect.height);
+        float sx = _ancho / static_cast<float>(rect.width);
+        float sy = _alto / static_cast<float>(rect.height);
         _sprite.setScale(sx, sy);
     }
 
-    _sprite.setPosition(posX, posY);
+    _sprite.setPosition(_posX, _posY);
 }
 
 // Carga de texturas
@@ -94,7 +94,7 @@ void Enemigo::update() {
         
         if (progreso >= 1.0f) {
             // Completamente desaparecido, marcar como muerto
-            vivo = false;
+            _vivo = false;
             _muriendo = false;
             return;
         }
@@ -104,13 +104,13 @@ void Enemigo::update() {
         _sprite.setColor(sf::Color(255, 255, 255, alpha));
         
         // Opcional: hacer que el enemigo se mueva ligeramente hacia abajo mientras desaparece
-        posY += 0.5f; // Movimiento suave hacia abajo
+        _posY += 0.5f; // Movimiento suave hacia abajo
         
-        _sprite.setPosition(posX, posY);
+        _sprite.setPosition(_posX, _posY);
         return;
     }
     
-    if (!vivo) return;
+    if (!_vivo) return;
 
     // Asegurar que el color esté en blanco (sin transparencia) cuando está vivo
     _sprite.setColor(sf::Color::White);
@@ -124,7 +124,7 @@ void Enemigo::update() {
     float w = static_cast<float>(rect.width);
 
     sf::Vector2f escala = _sprite.getScale();
-    if (moviendoDerecha) {
+    if (_moviendoDerecha) {
         _sprite.setScale(std::abs(escala.x), escala.y);
         _sprite.setOrigin(0.f, 0.f);
     } else {
@@ -132,34 +132,34 @@ void Enemigo::update() {
         _sprite.setOrigin(w, 0.f);
     }
 
-    _sprite.setPosition(posX, posY);
+    _sprite.setPosition(_posX, _posY);
 }
 
 // Patrullaje
 void Enemigo::patrullar() {
 
-    float vx = moviendoDerecha ? velocidadPatrullaje : -velocidadPatrullaje;
-    velX = vx;
-    posX += velX;
+    float vx = _moviendoDerecha ? _velocidadPatrullaje : -_velocidadPatrullaje;
+    _velX = vx;
+    _posX += _velX;
 
-    if (posX < limiteIzquierdo) {
-        posX = limiteIzquierdo;
-        moviendoDerecha = true;
+    if (_posX < _limiteIzquierdo) {
+        _posX = _limiteIzquierdo;
+        _moviendoDerecha = true;
     }
-    if (posX > limiteDerecho) {
-        posX = limiteDerecho;
-        moviendoDerecha = false;
+    if (_posX > _limiteDerecho) {
+        _posX = _limiteDerecho;
+        _moviendoDerecha = false;
     }
 }
 
 void Enemigo::setLimitePatrullaje(float izq, float der) {
-    limiteIzquierdo = izq;
-    limiteDerecho = der;
+    _limiteIzquierdo = izq;
+    _limiteDerecho = der;
 }
 
 // Selección de animación 
 void Enemigo::actualizarAnimacion() {
-    if (std::abs(velX) > 0.2f)
+    if (std::abs(_velX) > 0.2f)
         _estadoActual = EstadoAnimacionEnemigo::CAMINANDO;
     else
         _estadoActual = EstadoAnimacionEnemigo::IDLE;
@@ -184,8 +184,8 @@ void Enemigo::actualizarFrameAnimacion() {
     // reescala al tamaño de colisión
     sf::IntRect rect = _sprite.getTextureRect();
     if (rect.width > 0 && rect.height > 0) {
-        float sx = ancho / static_cast<float>(rect.width);
-        float sy = alto / static_cast<float>(rect.height);
+        float sx = _ancho / static_cast<float>(rect.width);
+        float sy = _alto / static_cast<float>(rect.height);
         _sprite.setScale(sx, sy);
     }
 }
@@ -222,7 +222,7 @@ bool Enemigo::colisionConJugador(const Entidad& jugador) {
 
 // Morir
 void Enemigo::morir() {
-    if (!vivo || _muriendo) return; // Ya está muerto o muriendo
+    if (!_vivo || _muriendo) return; // Ya está muerto o muriendo
     
     _muriendo = true;
     _relojMuerte.restart();
@@ -232,7 +232,7 @@ void Enemigo::morir() {
 // Dibujar
 void Enemigo::draw(sf::RenderTarget& t, sf::RenderStates s) const {
     // Dibujar si está vivo o si está en proceso de desaparecer
-    if (vivo || _muriendo) {
+    if (_vivo || _muriendo) {
         t.draw(_sprite, s);
     }
 }

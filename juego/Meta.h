@@ -15,20 +15,20 @@ public:
     bool verificarLlegada(const Entidad& jugador);
     
     // Getters
-    bool estaAlcanzada() const { return alcanzada; }
+    bool estaAlcanzada() const { return _alcanzada; }
     
     // Setters
-    void setAlcanzada(bool estado) { alcanzada = estado; }
+    void setAlcanzada(bool estado) { _alcanzada = estado; }
     
 private:
-    bool alcanzada;
+    bool _alcanzada;
     
     // Representación visual
-    sf::RectangleShape bandera;
-    sf::RectangleShape poste;
+    sf::RectangleShape _bandera;
+    sf::RectangleShape _poste;
     
     // Colores
-    sf::Color colorBandera;
-    sf::Color colorPoste;
-    sf::Color colorAlcanzada;
+    sf::Color _colorBandera;
+    sf::Color _colorPoste;
+    sf::Color _colorAlcanzada;
 };

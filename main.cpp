@@ -66,6 +66,7 @@ int main()
 
     NivelStart nivelStart;
     int nivelActual = 1;
+    int puntajeAcumulado = 0; // Puntaje acumulado entre niveles
 
     Puntaje puntaje;
     GameOver gameOver;
@@ -132,6 +133,7 @@ int main()
                 menu.reset();
 
                 nivelActual = 1;
+                puntajeAcumulado = 0; // Resetear puntaje acumulado al iniciar nuevo juego
                 nivel1 = Nivel();
                 puntaje.reset();
 
@@ -175,17 +177,18 @@ int main()
             if (nivelActual == 1) {
                 nivel1.procesarInput();
                 nivel1.update();
-                puntaje.update(*nivel1.getJugador());
+                puntaje.update(nivel1.getJugador());
 
                 if (nivel1.gameOver()) {
-                    int p = nivel1.getJugador()->getPuntaje();
-                    gestor.guardar(p);
-                    gameOver.inicializar(p, gestor);
+                    puntajeAcumulado += nivel1.getJugador().getPuntaje(); // Sumar puntaje del nivel actual
+                    gestor.guardar(puntajeAcumulado);
+                    gameOver.inicializar(puntajeAcumulado, gestor);
                     estado = EstadoJuego::GAME_OVER;
                 }
                 else if (nivel1.nivelCompletado()) {
+                    puntajeAcumulado += nivel1.getJugador().getPuntaje(); // Sumar puntaje del nivel 1
                     nivelActual = 2;
-                    nivel2 = Nivel2();
+                    nivel2 = Nivel2(puntajeAcumulado); // Pasar puntaje acumulado al nivel 2
                     nivelStart.setNivel(nivelActual);
                     nivelStart.reset();
                     estado = EstadoJuego::NIVEL_START;
@@ -202,17 +205,18 @@ int main()
             else if (nivelActual == 2) {
                 nivel2.procesarInput();
                 nivel2.update();
-                puntaje.update(*nivel2.getJugador());
+                puntaje.update(nivel2.getJugador());
 
                 if (nivel2.gameOver()) {
-                    int p = nivel2.getJugador()->getPuntaje();
-                    gestor.guardar(p);
-                    gameOver.inicializar(p, gestor);
+                    puntajeAcumulado = nivel2.getJugador().getPuntaje(); // El puntaje ya incluye el acumulado
+                    gestor.guardar(puntajeAcumulado);
+                    gameOver.inicializar(puntajeAcumulado, gestor);
                     estado = EstadoJuego::GAME_OVER;
                 }
                 else if (nivel2.nivelCompletado()) {
+                    puntajeAcumulado = nivel2.getJugador().getPuntaje(); // El puntaje ya incluye el acumulado
                     nivelActual = 3;
-                    nivel3 = Nivel3();
+                    nivel3 = Nivel3(puntajeAcumulado); // Pasar puntaje acumulado al nivel 3
                     nivelStart.setNivel(nivelActual);
                     nivelStart.reset();
                     estado = EstadoJuego::NIVEL_START;
@@ -229,18 +233,18 @@ int main()
             else if (nivelActual == 3) {
                 nivel3.procesarInput();
                 nivel3.update();
-                puntaje.update(*nivel3.getJugador());
+                puntaje.update(nivel3.getJugador());
 
                 if (nivel3.gameOver()) {
-                    int p = nivel3.getJugador()->getPuntaje();
-                    gestor.guardar(p);
-                    gameOver.inicializar(p, gestor);
+                    puntajeAcumulado = nivel3.getJugador().getPuntaje(); // El puntaje ya incluye el acumulado
+                    gestor.guardar(puntajeAcumulado);
+                    gameOver.inicializar(puntajeAcumulado, gestor);
                     estado = EstadoJuego::GAME_OVER;
                 }
                 else if (nivel3.nivelCompletado()) {
-                    int p = nivel3.getJugador()->getPuntaje();
-                    gestor.guardar(p);
-                    victoria.inicializar(p);
+                    puntajeAcumulado = nivel3.getJugador().getPuntaje(); // El puntaje ya incluye el acumulado
+                    gestor.guardar(puntajeAcumulado);
+                    victoria.inicializar(puntajeAcumulado);
                     estado = EstadoJuego::VICTORIA;
                 }
 

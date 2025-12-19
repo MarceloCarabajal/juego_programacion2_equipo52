@@ -14,14 +14,14 @@ public:
     void reset();
 
 private:
-    sf::Font fuente;
-    sf::Text textoGameOver;
-    sf::Text textoPuntaje;
-    sf::Text textoMejoresPuntajes;
-    sf::Text textoInstruccion;
+    sf::Font _fuente;
+    sf::Text _textoGameOver;
+    sf::Text _textoPuntaje;
+    sf::Text _textoMejoresPuntajes;
+    sf::Text _textoInstruccion;
     sf::Text _puntajes[5]; // Top 5 puntajes
 
-    bool volver = false;
+    bool _volver = false;
     int _puntajeFinal = 0;
     static const int MAX_PUNTAJES = 5;
 

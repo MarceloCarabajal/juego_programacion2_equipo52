@@ -11,7 +11,7 @@ GameOver::GameOver() {
     
     bool fuenteCargada = false;
     for (int i = 0; i < 3; i++) {
-        if (fuente.loadFromFile(rutas[i])) {
+        if (_fuente.loadFromFile(rutas[i])) {
             fuenteCargada = true;
             break;
         }
@@ -21,30 +21,30 @@ GameOver::GameOver() {
         std::cerr << "Warning: no se pudo cargar la fuente GameOver\n";
     }
 
-    textoGameOver.setFont(fuente);
-    textoGameOver.setString("GAME OVER");
-    textoGameOver.setCharacterSize(48); 
-    textoGameOver.setFillColor(sf::Color::Red);
-    textoGameOver.setStyle(sf::Text::Bold);
-    textoGameOver.setPosition(200, 150);
+    _textoGameOver.setFont(_fuente);
+    _textoGameOver.setString("GAME OVER");
+    _textoGameOver.setCharacterSize(48); 
+    _textoGameOver.setFillColor(sf::Color::Red);
+    _textoGameOver.setStyle(sf::Text::Bold);
+    _textoGameOver.setPosition(200, 150);
 
-    textoInstruccion.setFont(fuente);
-    textoInstruccion.setString("Presiona ENTER para volver al menu");
-    textoInstruccion.setCharacterSize(20);
-    textoInstruccion.setFillColor(sf::Color::White);
+    _textoInstruccion.setFont(_fuente);
+    _textoInstruccion.setString("Presiona ENTER para volver al menu");
+    _textoInstruccion.setCharacterSize(20);
+    _textoInstruccion.setFillColor(sf::Color::White);
 
-    textoPuntaje.setFont(fuente);
-    textoPuntaje.setCharacterSize(24);
-    textoPuntaje.setFillColor(sf::Color::White);
+    _textoPuntaje.setFont(_fuente);
+    _textoPuntaje.setCharacterSize(24);
+    _textoPuntaje.setFillColor(sf::Color::White);
 
-    textoMejoresPuntajes.setFont(fuente);
-    textoMejoresPuntajes.setString("MEJORES PUNTAJES");
-    textoMejoresPuntajes.setCharacterSize(18);
-    textoMejoresPuntajes.setFillColor(sf::Color::Yellow);
+    _textoMejoresPuntajes.setFont(_fuente);
+    _textoMejoresPuntajes.setString("MEJORES PUNTAJES");
+    _textoMejoresPuntajes.setCharacterSize(18);
+    _textoMejoresPuntajes.setFillColor(sf::Color::Yellow);
 
     // Configurar textos de puntajes individuales
     for (int i = 0; i < MAX_PUNTAJES; i++) {
-        _puntajes[i].setFont(fuente);
+        _puntajes[i].setFont(_fuente);
         _puntajes[i].setCharacterSize(14);
         _puntajes[i].setFillColor(sf::Color::White);
         _puntajes[i].setString("");
@@ -55,7 +55,7 @@ GameOver::GameOver() {
 
 void GameOver::inicializar(int puntajeFinal, const GestorArchivos& gestor) {
     _puntajeFinal = puntajeFinal;
-    textoPuntaje.setString("Puntaje Final: " + std::to_string(_puntajeFinal));
+    _textoPuntaje.setString("Puntaje Final: " + std::to_string(_puntajeFinal));
     cargarMejoresPuntajes(gestor);
     centrarTextos();
 }
@@ -64,7 +64,7 @@ void GameOver::cargarMejoresPuntajes(const GestorArchivos& gestor) {
     int cantidad = gestor.getCantidadRegistros();
     
     if (cantidad == 0) {
-        textoMejoresPuntajes.setString("MEJORES PUNTAJES");
+        _textoMejoresPuntajes.setString("MEJORES PUNTAJES");
         // Usar el primer texto de puntaje para mostrar el mensaje
         _puntajes[0].setString("(No hay puntajes guardados)");
         for (int i = 1; i < MAX_PUNTAJES; i++) {
@@ -92,7 +92,7 @@ void GameOver::cargarMejoresPuntajes(const GestorArchivos& gestor) {
     }
     
     // Actualizar título
-    textoMejoresPuntajes.setString("MEJORES PUNTAJES");
+    _textoMejoresPuntajes.setString("MEJORES PUNTAJES");
     
     // Mostrar top 5
     int mostrar = (leidos < MAX_PUNTAJES) ? leidos : MAX_PUNTAJES;
@@ -114,19 +114,19 @@ void GameOver::centrarTextos() {
     const float altoVentana = 600.f;
 
     // Centrar texto principal
-    sf::FloatRect bounds = textoGameOver.getLocalBounds();
-    textoGameOver.setOrigin(bounds.left + bounds.width / 2.f, bounds.top + bounds.height / 2.f);
-    textoGameOver.setPosition(anchoVentana / 2.f, 120.f);
+    sf::FloatRect bounds = _textoGameOver.getLocalBounds();
+    _textoGameOver.setOrigin(bounds.left + bounds.width / 2.f, bounds.top + bounds.height / 2.f);
+    _textoGameOver.setPosition(anchoVentana / 2.f, 120.f);
 
     // Centrar texto de puntaje final
-    bounds = textoPuntaje.getLocalBounds();
-    textoPuntaje.setOrigin(bounds.left + bounds.width / 2.f, bounds.top + bounds.height / 2.f);
-    textoPuntaje.setPosition(anchoVentana / 2.f, 180.f);
+    bounds = _textoPuntaje.getLocalBounds();
+    _textoPuntaje.setOrigin(bounds.left + bounds.width / 2.f, bounds.top + bounds.height / 2.f);
+    _textoPuntaje.setPosition(anchoVentana / 2.f, 180.f);
 
     // Posicionar título de mejores puntajes
-    bounds = textoMejoresPuntajes.getLocalBounds();
-    textoMejoresPuntajes.setOrigin(bounds.left + bounds.width / 2.f, bounds.top + bounds.height / 2.f);
-    textoMejoresPuntajes.setPosition(anchoVentana / 2.f, 240.f);
+    bounds = _textoMejoresPuntajes.getLocalBounds();
+    _textoMejoresPuntajes.setOrigin(bounds.left + bounds.width / 2.f, bounds.top + bounds.height / 2.f);
+    _textoMejoresPuntajes.setPosition(anchoVentana / 2.f, 240.f);
 
     // Posicionar lista de puntajes (siempre posicionar todos, aunque estén vacíos)
     for (int i = 0; i < MAX_PUNTAJES; i++) {
@@ -136,21 +136,21 @@ void GameOver::centrarTextos() {
     }
 
     // Centrar texto secundario (instrucción)
-    bounds = textoInstruccion.getLocalBounds();
-    textoInstruccion.setOrigin(bounds.left + bounds.width / 2.f, bounds.top + bounds.height / 2.f);
-    textoInstruccion.setPosition(anchoVentana / 2.f, 500.f);
+    bounds = _textoInstruccion.getLocalBounds();
+    _textoInstruccion.setOrigin(bounds.left + bounds.width / 2.f, bounds.top + bounds.height / 2.f);
+    _textoInstruccion.setPosition(anchoVentana / 2.f, 500.f);
 }
 
 void GameOver::procesarEvento(const sf::Event& event, sf::RenderWindow& window) {
     if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Enter) {
-        volver = true;
+        _volver = true;
     }
 }
 
 void GameOver::draw(sf::RenderWindow& window) {
-    window.draw(textoGameOver);
-    window.draw(textoPuntaje);
-    window.draw(textoMejoresPuntajes);
+    window.draw(_textoGameOver);
+    window.draw(_textoPuntaje);
+    window.draw(_textoMejoresPuntajes);
     
     for (int i = 0; i < MAX_PUNTAJES; i++) {
         if (_puntajes[i].getString().getSize() > 0) {
@@ -158,13 +158,13 @@ void GameOver::draw(sf::RenderWindow& window) {
         }
     }
     
-    window.draw(textoInstruccion);
+    window.draw(_textoInstruccion);
 }
 
 bool GameOver::volverAlMenu() const {
-    return volver;
+    return _volver;
 }
 
 void GameOver::reset() {
-    volver = false;
+    _volver = false;
 }

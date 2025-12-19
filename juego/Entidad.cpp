@@ -1,7 +1,7 @@
 #include "Entidad.h"
 
 Entidad::Entidad(float posX, float posY, float ancho, float alto)
-    : posX(posX), posY(posY), ancho(ancho), alto(alto), velX(0), velY(0) {
+    : _posX(posX), _posY(posY), _ancho(ancho), _alto(alto), _velX(0), _velY(0) {
 }
 
 bool Entidad::colisionaCon(const Entidad& otra) const {
