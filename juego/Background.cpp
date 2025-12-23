@@ -9,8 +9,8 @@ Background::Background(const std::string& nombreImagen) : _anchoVentana(800.f), 
 }
 
 void Background::cargarImagen(const std::string& nombreImagen) {
-    // Intentar cargar desde múltiples rutas (igual que Jugador y Enemigo)
-    // Las imágenes están en recursos/sprites/background/ (ubicación actualizada)
+    // intentar cargar desde multiples rutas (igual que Jugador y Enemigo)
+    // las imágenes estan en recursos/sprites/background/
     const char* rutasBase[] = {
         "recursos/sprites/background/",
         "../recursos/sprites/background/",
@@ -59,7 +59,7 @@ void Background::setTamanoVentana(float ancho, float alto) {
     
     sf::Vector2u tamanoTextura = _textura.getSize();
     if (tamanoTextura.x > 0 && tamanoTextura.y > 0) {
-        // Escalar el sprite para cubrir toda la ventana
+        // escalar el sprite para cubrir toda la ventana
         float escalaX = _anchoVentana / static_cast<float>(tamanoTextura.x);
         float escalaY = _altoVentana / static_cast<float>(tamanoTextura.y);
         _sprite.setScale(escalaX, escalaY);

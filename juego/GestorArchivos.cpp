@@ -10,7 +10,7 @@ bool GestorArchivos::guardar(int puntaje) {
     FILE* pFile;
     bool result = false;
     
-    // Intentar múltiples rutas como con las fuentes
+    // intentar múltiples rutas como con las fuentes
     std::string ruta1 = _nombreArchivo;
     std::string ruta2 = "../" + _nombreArchivo;
     std::string ruta3 = "../../" + _nombreArchivo;
@@ -57,7 +57,7 @@ int GestorArchivos::leerTodos(int puntajes[], int cantidad) const {
     FILE* pFile;
     int result = 0;
     
-    // Intentar múltiples rutas como con las fuentes
+    // intentar múltiples rutas como con las fuentes
     std::string ruta1 = _nombreArchivo;
     std::string ruta2 = "../" + _nombreArchivo;
     std::string ruta3 = "../../" + _nombreArchivo;
@@ -83,7 +83,7 @@ int GestorArchivos::getCantidadRegistros() const {
     FILE* pFile;
     int cantidad = 0;
     
-    // Intentar múltiples rutas como con las fuentes
+    // intentar múltiples rutas como con las fuentes
     std::string ruta1 = _nombreArchivo;
     std::string ruta2 = "../" + _nombreArchivo;
     std::string ruta3 = "../../" + _nombreArchivo;

@@ -6,7 +6,7 @@ void Colisiones::jugadorVsPlataforma(Jugador& jugador, const Plataforma& platafo
 }
 
 void Colisiones::jugadorVsEnemigo(Jugador& jugador, Enemigo& enemigo) {
-    // Verificar que el enemigo esté vivo y no esté muriendo antes de procesar colisiones
+    // verificar que el enemigo este vivo y no este muriendo antes de procesar colisiones
     if (!enemigo.estaVivo() || enemigo.estaMuriendo()) {
         return;
     }
@@ -17,14 +17,14 @@ void Colisiones::jugadorVsEnemigo(Jugador& jugador, Enemigo& enemigo) {
     if (jugadorBounds.intersects(enemigoBounds)) {
         sf::Vector2f velocidad = jugador.getVelocidad();
         
-        // Colisión desde arriba: jugador cae sobre el enemigo
+        // colision desde arriba: jugador cae sobre el enemigo
         if (jugadorBounds.top + jugadorBounds.height - 10 < enemigoBounds.top &&
             velocidad.y > 0) {
             enemigo.morir();
             jugador.sumarPuntos(100);
             std::cout << "Enemigo derrotado! +100 puntos" << std::endl;
         } else {
-            // Colisión lateral o inferior: jugador pierde vida
+            // colision lateral o inferior: jugador pierde vida
             jugador.perderVida();
             std::cout << "Jugador golpeado por enemigo! Vidas: " << jugador.getVidas() << std::endl;
         }

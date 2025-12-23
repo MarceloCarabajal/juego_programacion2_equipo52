@@ -2,7 +2,7 @@
 #include <iostream>
 
 Puntaje::Puntaje() : _tiempoTranscurrido(0.f) {
-    // Intentar cargar la fuente desde diferentes rutas
+    // intentar cargar la fuente desde diferentes rutas
     const char* rutas[] = {
         "recursos/PressStart2P-Regular.ttf",
         "../recursos/PressStart2P-Regular.ttf",
@@ -39,7 +39,7 @@ Puntaje::Puntaje() : _tiempoTranscurrido(0.f) {
 }
 
 void Puntaje::update(const Jugador& jugador) {
-    const float TIEMPO_INICIAL = 60.0f; // Duración total en segundos
+    const float TIEMPO_INICIAL = 60.0f; // duracion total en segundos
     float tiempoRestante = TIEMPO_INICIAL - _reloj.getElapsedTime().asSeconds();
     if (tiempoRestante < 0) tiempoRestante = 0;
 

@@ -19,7 +19,7 @@ private:
     sf::Text _textoPuntaje;
     sf::Text _textoMejoresPuntajes;
     sf::Text _textoInstruccion;
-    sf::Text _puntajes[5]; // Top 5 puntajes
+    sf::Text _puntajes[5]; // top 5 puntajes
 
     bool _volver = false;
     int _puntajeFinal = 0;

@@ -12,7 +12,7 @@ public:
 	static const int MAX_ENEMIGOS = 10;
 
 	Nivel();
-	Nivel(int puntajeInicial); // Constructor con puntaje inicial
+	Nivel(int puntajeInicial); 
 	void cargarPlataformas(); 
 	void posicionarEnemigos();
 	void colocarMeta();

@@ -30,7 +30,7 @@ void Nivel2::cargarPlataformas() {
 	_plataformas[_cantidadPlataformas] = Plataforma(0.f, 550.f, 800.f, 50.f);
 	_cantidadPlataformas++;
 	
-	// Plataformas flotantes - con color diferente (marrón/beige)
+	// plataformas flotantes - con color diferente (marrón/beige)
 	sf::Color colorPlataformaFlotante(139, 90, 43); // Color marrón/beige para plataformas flotantes
 	
 	// ruta hacia la meta: plataformas escalonadas del lado izquierdo

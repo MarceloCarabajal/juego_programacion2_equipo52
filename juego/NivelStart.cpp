@@ -4,7 +4,7 @@
 const float NivelStart::TIEMPO_ESPERA = 2.5f; // 2.5 segundos antes de continuar automáticamente
 
 NivelStart::NivelStart() {
-    // Intentar cargar la fuente desde diferentes rutas
+    // intentar cargar la fuente desde diferentes rutas
     const char* rutas[] = {
         "recursos/PressStart2P-Regular.ttf",
         "../recursos/PressStart2P-Regular.ttf",
@@ -30,14 +30,14 @@ NivelStart::NivelStart() {
 
 void NivelStart::setNivel(int numero) {
     _continuar = false;
-    _reloj.restart(); // Reiniciar el temporizador cuando se cambia de nivel
+    _reloj.restart(); // reiniciar el temporizador cuando se cambia de nivel
 
     _texto.setString("NIVEL " + std::to_string(numero));
 
-    // Obtener el tamaño real del texto
+    // obtener el tamaño real del texto
     sf::FloatRect bounds = _texto.getLocalBounds();
 
-    // Centrado en la ventana 800x600
+    // centrado en la ventana 800x600
     float x = (800 - bounds.width) / 2 - bounds.left;
     float y = (600 - bounds.height) / 2 - bounds.top;
 
@@ -45,15 +45,15 @@ void NivelStart::setNivel(int numero) {
 }
 
 void NivelStart::update() {
-    // Si ha pasado el tiempo de espera, continuar automáticamente
+    // si ha pasado el tiempo de espera, continuar automáticamente
     if (_reloj.getElapsedTime().asSeconds() >= TIEMPO_ESPERA) {
         _continuar = true;
     }
 }
 
 void NivelStart::procesarEvento(const sf::Event& event) {
-    // No hacer nada - la pantalla siempre espera el tiempo completo
-    // Esto evita que se avance accidentalmente al presionar una tecla
+    // no hacer nada - la pantalla siempre espera el tiempo completo
+    // esto evita que se avance accidentalmente al presionar una tecla
 }
 
 void NivelStart::dibujar(sf::RenderWindow& window) {

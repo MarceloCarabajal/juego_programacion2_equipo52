@@ -22,12 +22,12 @@ int main()
     GestorArchivos gestor("juego/puntajes.dat");
     Menu menu;
 
-    // Cargar sonido de inicio del juego
+    // cargar sonido de inicio del juego
     sf::SoundBuffer bufferSonido;
     sf::Sound sonidoInicio;
     bool sonidoCargado = false;
     
-    // Intentar cargar el sonido desde múltiples rutas
+    // intentar cargar el sonido desde múltiples rutas
     const char* rutasSonido[] = {
         "recursos/sounds/lara_sound.wav",
         "../recursos/sounds/lara_sound.wav",
@@ -50,7 +50,7 @@ int main()
         std::cerr << "Warning: No se pudo cargar el sonido lara_sound.wav" << std::endl;
     }
 
-    // Backgrounds para cada nivel (usando clase Background)
+    // backgrounds para cada nivel (usando clase Background)
     Background fondo1("nivel1.jpg");
     Background fondo2("nivel2.jpg");
     Background fondo3("nivel3.jpg");
@@ -59,7 +59,7 @@ int main()
     fondo2.setTamanoVentana(800.f, 600.f);
     fondo3.setTamanoVentana(800.f, 600.f);
 
-    // Niveles
+    // niveles
     Nivel nivel1;
     Nivel2 nivel2;
     Nivel3 nivel3;

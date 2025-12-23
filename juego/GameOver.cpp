@@ -65,7 +65,7 @@ void GameOver::cargarMejoresPuntajes(const GestorArchivos& gestor) {
     
     if (cantidad == 0) {
         _textoMejoresPuntajes.setString("MEJORES PUNTAJES");
-        // Usar el primer texto de puntaje para mostrar el mensaje
+        // usar el primer texto de puntaje para mostrar el mensaje
         _puntajes[0].setString("(No hay puntajes guardados)");
         for (int i = 1; i < MAX_PUNTAJES; i++) {
             _puntajes[i].setString("");
@@ -73,16 +73,16 @@ void GameOver::cargarMejoresPuntajes(const GestorArchivos& gestor) {
         return;
     }
 
-    // Leer todos los puntajes
+    // leer todos los puntajes
     int* todosPuntajes = new int[cantidad];
     int leidos = gestor.leerTodos(todosPuntajes, cantidad);
     
-    // Ordenar de mayor a menor usando bubble sort (solo si hay más de 1 elemento)
+    // ordenar de mayor a menor usando bubble sort (solo si hay más de 1 elemento)
     if (leidos > 1) {
         for (int i = 0; i < leidos - 1; i++) {
             for (int j = 0; j < leidos - 1 - i; j++) {
                 if (todosPuntajes[j] < todosPuntajes[j + 1]) {
-                    // Intercambiar valores
+                    // intercambiar valores
                     int temp = todosPuntajes[j];
                     todosPuntajes[j] = todosPuntajes[j + 1];
                     todosPuntajes[j + 1] = temp;
@@ -91,17 +91,17 @@ void GameOver::cargarMejoresPuntajes(const GestorArchivos& gestor) {
         }
     }
     
-    // Actualizar título
+    // actualizar título
     _textoMejoresPuntajes.setString("MEJORES PUNTAJES");
     
-    // Mostrar top 5
+    // mostrar top 5
     int mostrar = (leidos < MAX_PUNTAJES) ? leidos : MAX_PUNTAJES;
     for (int i = 0; i < mostrar; i++) {
         std::string texto = std::to_string(i + 1) + ". " + std::to_string(todosPuntajes[i]);
         _puntajes[i].setString(texto);
     }
     
-    // Limpiar los que no se muestran
+    // limpiar los que no se muestran
     for (int i = mostrar; i < MAX_PUNTAJES; i++) {
         _puntajes[i].setString("");
     }
@@ -113,29 +113,29 @@ void GameOver::centrarTextos() {
     const float anchoVentana = 800.f;
     const float altoVentana = 600.f;
 
-    // Centrar texto principal
+    // centrar texto principal
     sf::FloatRect bounds = _textoGameOver.getLocalBounds();
     _textoGameOver.setOrigin(bounds.left + bounds.width / 2.f, bounds.top + bounds.height / 2.f);
     _textoGameOver.setPosition(anchoVentana / 2.f, 120.f);
 
-    // Centrar texto de puntaje final
+    // centrar texto de puntaje final
     bounds = _textoPuntaje.getLocalBounds();
     _textoPuntaje.setOrigin(bounds.left + bounds.width / 2.f, bounds.top + bounds.height / 2.f);
     _textoPuntaje.setPosition(anchoVentana / 2.f, 180.f);
 
-    // Posicionar título de mejores puntajes
+    // posicionar título de mejores puntajes
     bounds = _textoMejoresPuntajes.getLocalBounds();
     _textoMejoresPuntajes.setOrigin(bounds.left + bounds.width / 2.f, bounds.top + bounds.height / 2.f);
     _textoMejoresPuntajes.setPosition(anchoVentana / 2.f, 240.f);
 
-    // Posicionar lista de puntajes (siempre posicionar todos, aunque estén vacíos)
+    // posicionar lista de puntajes (siempre posicionar todos, aunque estén vacíos)
     for (int i = 0; i < MAX_PUNTAJES; i++) {
         bounds = _puntajes[i].getLocalBounds();
         _puntajes[i].setOrigin(bounds.left + bounds.width / 2.f, bounds.top + bounds.height / 2.f);
         _puntajes[i].setPosition(anchoVentana / 2.f, 280.f + i * 30.f);
     }
 
-    // Centrar texto secundario (instrucción)
+    // centrar texto secundario (instruccion)
     bounds = _textoInstruccion.getLocalBounds();
     _textoInstruccion.setOrigin(bounds.left + bounds.width / 2.f, bounds.top + bounds.height / 2.f);
     _textoInstruccion.setPosition(anchoVentana / 2.f, 500.f);

@@ -19,8 +19,8 @@ void Nivel::cargarPlataformas() {
 	_plataformas[_cantidadPlataformas] = Plataforma(0.f, 550.f, 800.f, 50.f);
 	_cantidadPlataformas++;
 	
-	// Plataformas flotantes (hardcodeadas) - con color diferente (marrón/beige)
-	sf::Color colorPlataformaFlotante(139, 90, 43); // Color marrón/beige para plataformas flotantes
+	// plataformas flotantes - con color diferente (marrón/beige)
+	sf::Color colorPlataformaFlotante(139, 90, 43); // color marrón/beige para plataformas flotantes
 	
 	_plataformas[_cantidadPlataformas] = Plataforma(200.f, 450.f, 100.f, 20.f);
 	_plataformas[_cantidadPlataformas].setColor(colorPlataformaFlotante);
@@ -99,12 +99,12 @@ void Nivel::verificarColisiones() {
 		Colisiones::jugadorVsEnemigo(_jugador, _enemigos[i]);
 	}
 	
-	// Verificar colisión con Meta
+	// verificar colision con Meta
 	if (_meta.verificarLlegada(_jugador)) {
         _nivelCompletado = true;
 	}
 	
-	// Verificar si el jugador perdió todas las vidas
+	// verificar si el jugador perdio todas las vidas
     if (_jugador.getVidas() <= 0) {
        _gameOver = true;
 	}
@@ -116,7 +116,7 @@ void Nivel::dibujarTodo(sf::RenderTarget& target) {
 		target.draw(_plataformas[i]);
 	}
 	
-	// Dibujar enemigos vivos o que están en proceso de desaparecer
+	// dibujar enemigos vivos o que estqn en proceso de desaparecer
 	for (int i = 0; i < _cantidadEnemigos; i++) {
 		if (_enemigos[i].estaVivo() || _enemigos[i].estaMuriendo()) {
 			target.draw(_enemigos[i]);
