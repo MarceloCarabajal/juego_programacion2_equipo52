@@ -7,47 +7,47 @@
 
 class Jugador : public Entidad, public sf::Drawable {
 public:
-    Jugador(int numeroPersonaje = 1); // Número del personaje (1-10)
+    Jugador(int numeroPersonaje = 1);
 
     void update() override;
     void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 
-    void cmd();
-    void checkCollision(const sf::FloatRect& platformBounds);
+    void procesarComandos();
+    void verificarColision(const sf::FloatRect& platformBounds);
     bool estaSobrePlataforma(const sf::FloatRect& platformBounds) const;
-    const sf::FloatRect getBounds() const { return getRectanguloColision(); }
+    const sf::FloatRect obtenerLimites() const;
 
-    sf::Vector2f getVelocidad() const { return sf::Vector2f(_velX, _velY); }
+    sf::Vector2f getVelocidad() const;
 
-    void setEnSuelo(bool enSuelo) { _enSuelo = enSuelo; }
+    void setEnSuelo(bool enSuelo);
 
     // getters y métodos de juego
-    int getVidas() const { return _vidas; }
-    int getPuntaje() const { return _puntaje; }
-    void sumarPuntos(int p) { _puntaje += p; }
-    void setPuntaje(int p) { _puntaje = p; }
-    void perderVida();  // implementación en .cpp
+    int getVidas() const;
+    int getPuntaje() const;
+    void sumarPuntos(int p);
+    void setPuntaje(int p);
+    void perderVida(); 
 
-    bool isOnGround() const { return _enSuelo; }
-    bool estaInvulnerable() const { return _invulnerable; }
+    bool estaEnSuelo() const;
+    bool estaInvulnerable() const;
 
 private:
     // Sprite y texturas
     sf::Sprite _sprite;
-    sf::Texture _texturaIdle;
-    sf::Texture _texturaWalk; // También se usa para salto
+    sf::Texture _texturaInactivo;
+    sf::Texture _texturaCaminando;
     
     // Animación de frames
-    int _frameActualIdle;
-    int _frameActualWalk;
-    int _frameActualJump;
+    int _frameActualInactivo;
+    int _frameActualCaminando;
+    int _frameActualSaltando;
     sf::Clock _relojAnimacion;
-    static const int FRAMES_POR_ANIMACION_IDLE = 2; // 2 frames para idle
-    static const int FRAMES_POR_ANIMACION_WALK = 4; // 4 frames para walk (columna 3)
-    static const int FRAMES_POR_ANIMACION_JUMP = 3; // 3 frames para jump (columna 3, primeros 3)
-    static const int FRAMES_IDLE[2]; // Frames para idle: 0 y 3 (primera columna)
-    static const int FRAMES_WALK[4]; // Frames para walk: columna 3 (4 frames)
-    static const int FRAMES_JUMP[3]; // Frames para jump: columna 3, primeros 3 frames (2, 5, 8)
+    static const int FRAMES_POR_ANIMACION_INACTIVO = 2; // 2 frames para inactivo
+    static const int FRAMES_POR_ANIMACION_CAMINANDO = 4; // 4 frames para caminando (columna 3)
+    static const int FRAMES_POR_ANIMACION_SALTANDO = 3; // 3 frames para saltando (columna 3, primeros 3)
+    static const int FRAMES_INACTIVO[2]; // Frames para inactivo: 0 y 3 (primera columna)
+    static const int FRAMES_CAMINANDO[4]; // Frames para caminando: columna 3 (4 frames)
+    static const int FRAMES_SALTANDO[3]; // Frames para saltando: columna 3, primeros 3 frames (2, 5, 8)
     static const float VELOCIDAD_ANIMACION; // Frames por segundo
     
     EstadoAnimacionJugador _estadoAnimacionActual;

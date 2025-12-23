@@ -3,19 +3,19 @@
 #include <sstream>
 
 const float Jugador::VELOCIDAD_ANIMACION = 10.0f; // 10 frames por segundo
-const int Jugador::FRAMES_IDLE[2] = {0, 3}; // Primera columna: frames 0 y 3
-const int Jugador::FRAMES_WALK[4] = {2, 5, 8, 11}; // Columna 3: frames 2, 5, 8, 11 (asumiendo 4 filas x 3 columnas)
-const int Jugador::FRAMES_JUMP[3] = {2, 5, 8}; // Columna 3: primeros 3 frames (2, 5, 8)
+const int Jugador::FRAMES_INACTIVO[2] = {0, 3}; // Primera columna: frames 0 y 3
+const int Jugador::FRAMES_CAMINANDO[4] = {2, 5, 8, 11}; // Columna 3: frames 2, 5, 8, 11 (asumiendo 4 filas x 3 columnas)
+const int Jugador::FRAMES_SALTANDO[3] = {2, 5, 8}; // Columna 3: primeros 3 frames (2, 5, 8)
 
 Jugador::Jugador(int numeroPersonaje) 
 	: Entidad(100.f, 100.f, 32.f, 32.f), 
 	  _gravedad(0.8f), 
 	  _velocidadSalto(-12.0f), 
 	  _enSuelo(false),
-	  _frameActualIdle(0),
-	  _frameActualWalk(0),
-	  _frameActualJump(0),
-	  _estadoAnimacionActual(EstadoAnimacionJugador::IDLE),
+	  _frameActualInactivo(0),
+	  _frameActualCaminando(0),
+	  _frameActualSaltando(0),
+	  _estadoAnimacionActual(EstadoAnimacionJugador::INACTIVO),
 	  _mirandoDerecha(true) {
 	_vidas = 3;
 	_puntaje = 0;
@@ -25,11 +25,11 @@ Jugador::Jugador(int numeroPersonaje)
 	cargarTexturas(numeroPersonaje);
 	
 	// Configurar sprite inicial
-	_sprite.setTexture(_texturaIdle);
+	_sprite.setTexture(_texturaInactivo);
 	_sprite.setPosition(_posX, _posY);
 	
-	// Establecer el primer frame de la animación idle (frame 0, primera columna)
-	_sprite.setTextureRect(obtenerRectanguloFrame(FRAMES_IDLE[0], _texturaIdle));
+	// Establecer el primer frame de la animación inactivo (frame 0, primera columna)
+	_sprite.setTextureRect(obtenerRectanguloFrame(FRAMES_INACTIVO[0], _texturaInactivo));
 	
 	// Ajustar tamaño del sprite al tamaño de colisión (32x32)
 	sf::IntRect rectFrame = _sprite.getTextureRect();
@@ -40,7 +40,7 @@ Jugador::Jugador(int numeroPersonaje)
 	}
 }
 
-void Jugador::cmd() {
+void Jugador::procesarComandos() {
 	// movimiento horizontal
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::A) || sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
 		_velX = -5.0f;
@@ -145,7 +145,7 @@ void Jugador::update() {
 	_sprite.setPosition(_posX, _posY);
 }
 
-void Jugador::checkCollision(const sf::FloatRect& platformBounds) {
+void Jugador::verificarColision(const sf::FloatRect& platformBounds) {
 	sf::FloatRect jugadorBounds = getRectanguloColision();
 	
 	if (jugadorBounds.intersects(platformBounds)) {
@@ -189,10 +189,46 @@ void Jugador::draw(sf::RenderTarget& target, sf::RenderStates states) const {
 	target.draw(_sprite, states);
 }
 
+const sf::FloatRect Jugador::obtenerLimites() const {
+	return getRectanguloColision();
+}
+
+sf::Vector2f Jugador::getVelocidad() const {
+	return sf::Vector2f(_velX, _velY);
+}
+
+void Jugador::setEnSuelo(bool enSuelo) {
+	_enSuelo = enSuelo;
+}
+
+int Jugador::getVidas() const {
+	return _vidas;
+}
+
+int Jugador::getPuntaje() const {
+	return _puntaje;
+}
+
+void Jugador::sumarPuntos(int p) {
+	_puntaje += p;
+}
+
+void Jugador::setPuntaje(int p) {
+	_puntaje = p;
+}
+
+bool Jugador::estaEnSuelo() const {
+	return _enSuelo;
+}
+
+bool Jugador::estaInvulnerable() const {
+	return _invulnerable;
+}
+
 void Jugador::cargarTexturas(int numeroPersonaje) {
 	// Construir rutas a las texturas
-	std::string rutaIdle = construirRuta("idle", numeroPersonaje);
-	std::string rutaWalk = construirRuta("walk", numeroPersonaje);
+	std::string rutaInactivo = construirRuta("idle", numeroPersonaje);
+	std::string rutaCaminando = construirRuta("walk", numeroPersonaje);
 	
 	const char* rutasBase[] = {
 		"recursos/sprites/jugador/",      // Ruta relativa desde el ejecutable (Debug/recursos/sprites/jugador/)
@@ -202,39 +238,39 @@ void Jugador::cargarTexturas(int numeroPersonaje) {
 		""                                 // Último fallback: directorio raíz
 	};
 	
-	bool idleCargada = false, walkCargada = false;
+	bool inactivoCargada = false, caminandoCargada = false;
 	
 	for (int i = 0; i < 5; i++) {
-		std::string rutaCompletaIdle = rutasBase[i] + rutaIdle;
-		std::string rutaCompletaWalk = rutasBase[i] + rutaWalk;
+		std::string rutaCompletaInactivo = rutasBase[i] + rutaInactivo;
+		std::string rutaCompletaCaminando = rutasBase[i] + rutaCaminando;
 		
-		if (!idleCargada && _texturaIdle.loadFromFile(rutaCompletaIdle)) {
-			idleCargada = true;
-			std::cout << "Textura idle cargada desde: " << rutaCompletaIdle << std::endl;
+		if (!inactivoCargada && _texturaInactivo.loadFromFile(rutaCompletaInactivo)) {
+			inactivoCargada = true;
+			std::cout << "Textura inactivo cargada desde: " << rutaCompletaInactivo << std::endl;
 		}
-		if (!walkCargada && _texturaWalk.loadFromFile(rutaCompletaWalk)) {
-			walkCargada = true;
-			std::cout << "Textura walk cargada desde: " << rutaCompletaWalk << std::endl;
+		if (!caminandoCargada && _texturaCaminando.loadFromFile(rutaCompletaCaminando)) {
+			caminandoCargada = true;
+			std::cout << "Textura caminando cargada desde: " << rutaCompletaCaminando << std::endl;
 		}
 		
-		if (idleCargada && walkCargada) {
+		if (inactivoCargada && caminandoCargada) {
 			break;
 		}
 	}
 	
-	if (!idleCargada || !walkCargada) {
+	if (!inactivoCargada || !caminandoCargada) {
 		std::cerr << "Warning: No se pudieron cargar todas las texturas del personaje " << numeroPersonaje << std::endl;
-		if (!idleCargada) std::cerr << "  - No se pudo cargar: " << rutaIdle << std::endl;
-		if (!walkCargada) std::cerr << "  - No se pudo cargar: " << rutaWalk << std::endl;
+		if (!inactivoCargada) std::cerr << "  - No se pudo cargar: " << rutaInactivo << std::endl;
+		if (!caminandoCargada) std::cerr << "  - No se pudo cargar: " << rutaCaminando << std::endl;
 		
 		// Crear texturas placeholder si no se cargaron
-		if (!idleCargada) {
-			_texturaIdle.create(32, 32);
+		if (!inactivoCargada) {
+			_texturaInactivo.create(32, 32);
 			sf::Image img;
 			img.create(32, 32, sf::Color::Blue);
-			_texturaIdle.update(img);
+			_texturaInactivo.update(img);
 		}
-		if (!walkCargada) _texturaWalk = _texturaIdle;
+		if (!caminandoCargada) _texturaCaminando = _texturaInactivo;
 	}
 }
 
@@ -256,7 +292,7 @@ void Jugador::actualizarAnimacion() {
 		nuevoEstado = EstadoAnimacionJugador::CAMINANDO;
 	} else {
 		// Está en el suelo y quieto
-		nuevoEstado = EstadoAnimacionJugador::IDLE;
+		nuevoEstado = EstadoAnimacionJugador::INACTIVO;
 	}
 	
 	// Cambiar de estado si es necesario
@@ -272,26 +308,26 @@ void Jugador::actualizarFrameAnimacion() {
 	
 	// Actualizar el frame según el estado actual
 	switch (_estadoAnimacionActual) {
-		case EstadoAnimacionJugador::IDLE: {
-			int indiceAnimacion = static_cast<int>(tiempoTranscurrido / tiempoPorFrame) % FRAMES_POR_ANIMACION_IDLE;
-			_frameActualIdle = indiceAnimacion;
-			_sprite.setTexture(_texturaIdle);
-			_sprite.setTextureRect(obtenerRectanguloFrame(FRAMES_IDLE[indiceAnimacion], _texturaIdle));
+		case EstadoAnimacionJugador::INACTIVO: {
+			int indiceAnimacion = static_cast<int>(tiempoTranscurrido / tiempoPorFrame) % FRAMES_POR_ANIMACION_INACTIVO;
+			_frameActualInactivo = indiceAnimacion;
+			_sprite.setTexture(_texturaInactivo);
+			_sprite.setTextureRect(obtenerRectanguloFrame(FRAMES_INACTIVO[indiceAnimacion], _texturaInactivo));
 			break;
 		}
 		case EstadoAnimacionJugador::CAMINANDO: {
-			int indiceAnimacion = static_cast<int>(tiempoTranscurrido / tiempoPorFrame) % FRAMES_POR_ANIMACION_WALK;
-			_frameActualWalk = indiceAnimacion;
-			_sprite.setTexture(_texturaWalk);
-			_sprite.setTextureRect(obtenerRectanguloFrame(FRAMES_WALK[indiceAnimacion], _texturaWalk));
+			int indiceAnimacion = static_cast<int>(tiempoTranscurrido / tiempoPorFrame) % FRAMES_POR_ANIMACION_CAMINANDO;
+			_frameActualCaminando = indiceAnimacion;
+			_sprite.setTexture(_texturaCaminando);
+			_sprite.setTextureRect(obtenerRectanguloFrame(FRAMES_CAMINANDO[indiceAnimacion], _texturaCaminando));
 			break;
 		}
 		case EstadoAnimacionJugador::SALTANDO: {
-			int indiceAnimacion = static_cast<int>(tiempoTranscurrido / tiempoPorFrame) % FRAMES_POR_ANIMACION_JUMP;
-			_frameActualJump = indiceAnimacion;
-			// Usar walk.png para el salto también (sabemos que funciona bien)
-			_sprite.setTexture(_texturaWalk);
-			_sprite.setTextureRect(obtenerRectanguloFrame(FRAMES_JUMP[indiceAnimacion], _texturaWalk));
+			int indiceAnimacion = static_cast<int>(tiempoTranscurrido / tiempoPorFrame) % FRAMES_POR_ANIMACION_SALTANDO;
+			_frameActualSaltando = indiceAnimacion;
+			// Usar caminando.png para el salto también (sabemos que funciona bien)
+			_sprite.setTexture(_texturaCaminando);
+			_sprite.setTextureRect(obtenerRectanguloFrame(FRAMES_SALTANDO[indiceAnimacion], _texturaCaminando));
 			break;
 		}
 	}

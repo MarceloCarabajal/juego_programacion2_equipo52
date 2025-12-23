@@ -166,7 +166,7 @@ int main()
             }
 
             window.clear();
-            nivelStart.draw(window);
+            nivelStart.dibujar(window);
             window.display();
         }
 
@@ -259,7 +259,7 @@ int main()
         // GAME OVER
         else if (estado == EstadoJuego::GAME_OVER) {
             window.clear();
-            gameOver.draw(window);
+            gameOver.dibujar(window);
             window.display();
         }
 

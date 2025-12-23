@@ -63,7 +63,7 @@ void Nivel::colocarMeta() {
 }
 
 void Nivel::procesarInput() {
-	_jugador.cmd();
+	_jugador.procesarComandos();
 }
 
 void Nivel::update() {
@@ -86,12 +86,12 @@ void Nivel::verificarColisiones() {
 	for (int i = 0; i < _cantidadPlataformas; i++) {
 		Colisiones::jugadorVsPlataforma(_jugador, _plataformas[i]);
 		
-		if (_jugador.estaSobrePlataforma(_plataformas[i].getBounds())) {
+		if (_jugador.estaSobrePlataforma(_plataformas[i].obtenerLimites())) {
 			estaSobreAlgunaPlataforma = true;
 		}
 	}
 	
-	if (!estaSobreAlgunaPlataforma && _jugador.isOnGround()) {
+	if (!estaSobreAlgunaPlataforma && _jugador.estaEnSuelo()) {
 		_jugador.setEnSuelo(false);
 	}
 	
@@ -128,7 +128,19 @@ void Nivel::dibujarTodo(sf::RenderTarget& target) {
 	target.draw(_jugador);
 }
 
+Jugador& Nivel::getJugador() {
+	return _jugador;
+}
+
 bool Nivel::verificarVictoria() const {
 	return _meta.estaAlcanzada();
+}
+
+bool Nivel::nivelCompletado() const {
+	return _nivelCompletado;
+}
+
+bool Nivel::gameOver() const {
+	return _gameOver;
 }
 

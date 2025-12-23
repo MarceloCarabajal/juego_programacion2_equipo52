@@ -22,10 +22,10 @@ public:
     void update();
     void dibujarTodo(sf::RenderTarget& target);
 
-    Jugador& getJugador() { return _jugador; }
+    Jugador& getJugador();
 
-    bool nivelCompletado() const { return _nivelCompletado; }
-    bool gameOver() const { return _gameOver; }
+    bool nivelCompletado() const;
+    bool gameOver() const;
 
 private:
     Jugador _jugador;

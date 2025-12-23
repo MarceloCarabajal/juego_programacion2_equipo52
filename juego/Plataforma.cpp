@@ -1,7 +1,6 @@
 #include "Plataforma.h"
 
 Plataforma::Plataforma() {
-	// Constructor por defecto: inicializa con valores por defecto
 	_body.setSize({ 0.f, 0.f });
 	_body.setFillColor(sf::Color(80, 200, 120));
 	_body.setPosition(0.f, 0.f);
@@ -19,4 +18,16 @@ void Plataforma::update() {
 
 void Plataforma::draw(sf::RenderTarget& target, sf::RenderStates states) const {
 	target.draw(_body, states);
+}
+
+const sf::FloatRect Plataforma::obtenerLimites() const {
+	return _body.getGlobalBounds();
+}
+
+const sf::FloatRect Plataforma::obtenerColisionador() const {
+	return obtenerLimites();
+}
+
+void Plataforma::setColor(const sf::Color& color) {
+	_body.setFillColor(color);
 }

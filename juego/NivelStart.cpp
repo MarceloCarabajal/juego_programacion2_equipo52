@@ -56,6 +56,15 @@ void NivelStart::procesarEvento(const sf::Event& event) {
     // Esto evita que se avance accidentalmente al presionar una tecla
 }
 
-void NivelStart::draw(sf::RenderWindow& window) {
+void NivelStart::dibujar(sf::RenderWindow& window) {
     window.draw(_texto);
+}
+
+bool NivelStart::continuar() const {
+    return _continuar;
+}
+
+void NivelStart::reset() {
+    _continuar = false;
+    _reloj.restart(); // Reiniciar el temporizador
 }

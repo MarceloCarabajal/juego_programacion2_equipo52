@@ -58,3 +58,11 @@ void Menu::draw(sf::RenderTarget& target, sf::RenderStates states) const {
     target.draw(_opcionJugar, states);
     target.draw(_opcionSalir, states);
 }
+
+bool Menu::estaIniciandoJuego() const {
+    return _iniciandoJuego;
+}
+
+void Menu::reset() {
+    _iniciandoJuego = false;
+}

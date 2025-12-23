@@ -81,3 +81,7 @@ void Victoria::draw(sf::RenderTarget& target, sf::RenderStates states) const {
 void Victoria::reset() {
     _volverAlMenu = false;
 }
+
+bool Victoria::volverAlMenu() const {
+    return _volverAlMenu;
+}

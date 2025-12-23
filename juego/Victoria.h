@@ -7,7 +7,7 @@ public:
 
     void inicializar(int puntajeFinal);
     void procesarEvento(const sf::Event& event, sf::RenderWindow& window);
-    bool volverAlMenu() const { return _volverAlMenu; }
+    bool volverAlMenu() const;
     void reset();
 
 private:

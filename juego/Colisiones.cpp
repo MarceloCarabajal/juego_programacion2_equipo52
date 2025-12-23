@@ -2,7 +2,7 @@
 #include <iostream>
 
 void Colisiones::jugadorVsPlataforma(Jugador& jugador, const Plataforma& plataforma) {
-    jugador.checkCollision(plataforma.getBounds());
+    jugador.verificarColision(plataforma.obtenerLimites());
 }
 
 void Colisiones::jugadorVsEnemigo(Jugador& jugador, Enemigo& enemigo) {
@@ -11,8 +11,8 @@ void Colisiones::jugadorVsEnemigo(Jugador& jugador, Enemigo& enemigo) {
         return;
     }
     
-    sf::FloatRect jugadorBounds = jugador.getBounds();
-    sf::FloatRect enemigoBounds = enemigo.getBounds();
+    sf::FloatRect jugadorBounds = jugador.obtenerLimites();
+    sf::FloatRect enemigoBounds = enemigo.obtenerLimites();
 
     if (jugadorBounds.intersects(enemigoBounds)) {
         sf::Vector2f velocidad = jugador.getVelocidad();

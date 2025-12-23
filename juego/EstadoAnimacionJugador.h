@@ -1,7 +1,7 @@
 #pragma once
 
 enum class EstadoAnimacionJugador {
-    IDLE,
+    INACTIVO,
     CAMINANDO,
     SALTANDO
 };

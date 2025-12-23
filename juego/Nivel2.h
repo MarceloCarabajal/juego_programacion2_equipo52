@@ -20,11 +20,11 @@ public:
 	
 	void update();
 	void procesarInput();
-	Jugador& getJugador() { return _jugador; }
+	Jugador& getJugador();
 	
 	bool verificarVictoria() const;
-	bool nivelCompletado() const { return _nivelCompletado; }
-    bool gameOver() const { return _gameOver; }
+	bool nivelCompletado() const;
+    bool gameOver() const;
 
 private:
 	Jugador _jugador;

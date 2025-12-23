@@ -147,7 +147,7 @@ void GameOver::procesarEvento(const sf::Event& event, sf::RenderWindow& window) 
     }
 }
 
-void GameOver::draw(sf::RenderWindow& window) {
+void GameOver::dibujar(sf::RenderWindow& window) {
     window.draw(_textoGameOver);
     window.draw(_textoPuntaje);
     window.draw(_textoMejoresPuntajes);

@@ -9,7 +9,7 @@ public:
 
     void inicializar(int puntajeFinal, const GestorArchivos& gestor);
     void procesarEvento(const sf::Event& event, sf::RenderWindow& window);
-    void draw(sf::RenderWindow& window);
+    void dibujar(sf::RenderWindow& window);
     bool volverAlMenu() const;
     void reset();
 

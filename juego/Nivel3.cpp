@@ -97,7 +97,7 @@ void Nivel3::colocarMeta() {
 }
 
 void Nivel3::procesarInput() {
-    _jugador.cmd();
+    _jugador.procesarComandos();
 }
 
 void Nivel3::update() {
@@ -119,11 +119,11 @@ void Nivel3::verificarColisiones() {
     for (int i = 0; i < _cantidadPlataformas; i++) {
         Colisiones::jugadorVsPlataforma(_jugador, _plataformas[i]);
 
-        if (_jugador.estaSobrePlataforma(_plataformas[i].getBounds()))
+        if (_jugador.estaSobrePlataforma(_plataformas[i].obtenerLimites()))
             sobrePlataforma = true;
     }
 
-    if (!sobrePlataforma && _jugador.isOnGround())
+    if (!sobrePlataforma && _jugador.estaEnSuelo())
         _jugador.setEnSuelo(false);
 
     for (int i = 0; i < _cantidadEnemigos; i++)
@@ -150,4 +150,16 @@ void Nivel3::dibujarTodo(sf::RenderTarget& target) {
 
     target.draw(_meta);
     target.draw(_jugador);
+}
+
+Jugador& Nivel3::getJugador() {
+    return _jugador;
+}
+
+bool Nivel3::nivelCompletado() const {
+    return _nivelCompletado;
+}
+
+bool Nivel3::gameOver() const {
+    return _gameOver;
 }

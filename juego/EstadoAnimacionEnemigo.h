@@ -1,6 +1,6 @@
 #pragma once
 
 enum class EstadoAnimacionEnemigo {
-    IDLE,
+    INACTIVO,
     CAMINANDO
 };

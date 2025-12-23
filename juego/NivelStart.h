@@ -15,11 +15,8 @@ public:
     void setNivel(int numero);
     void procesarEvento(const sf::Event& event);
     void update(); // Actualizar el temporizador
-    void draw(sf::RenderWindow& window);
+    void dibujar(sf::RenderWindow& window);
 
-    bool continuar() const { return _continuar; }
-    void reset() { 
-        _continuar = false;
-        _reloj.restart(); // Reiniciar el temporizador
-    }
+    bool continuar() const;
+    void reset();
 };
